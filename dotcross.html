@@ -154,6 +154,9 @@ label.f input:focus, label.f select:focus { outline: 3px solid var(--yellow); ou
 .shell-ctl .el-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; }
 .shell-ctl b { font-size: 1.2rem; min-width: 4.5em; text-align: center; }
 .ion-ctl { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.ion-ctl .seg { flex-wrap: nowrap; }
+.ion-ctl .lbl { min-width: 4.6em; }
+.ion-ctl .tap { min-width: 52px; padding-inline: 8px; }
 @media (min-width: 560px) { .ion-ctl { grid-template-columns: 1fr 1fr; } }
 .toast { pointer-events: none; position: fixed; left: 50%; top: 12px; translate: -50% 0; z-index: 60; max-width: min(92vw, 520px); font-weight: 700; font-size: 1rem; padding: 12px 16px; border: var(--b); border-radius: 16px; box-shadow: 4px 4px 0 var(--ink); background: #fff; text-align: center; }
 .toast.warn { background: var(--orange-tint); }
@@ -383,6 +386,7 @@ var ERR = {
   central:      { label: "Choosing the central atom", tip: "The central atom is the one that needs to share the most electrons (N in NH₃, C in CH₄)." },
   atomCount:    { label: "Number of atoms in the molecule", tip: "Follow the formula: NH₃ has 1 N and 3 H, so copy the H atom 3 times." },
   innerFirst:   { label: "Filled an outer shell too early", tip: "Fill shells from the inside out: the 1st shell holds 2 electrons, then the 2nd and 3rd shells hold 8." },
+  bondFirst:    { label: "Lone pairs before shared pairs", tip: "Fill the shared (bonding) pairs in the overlaps first, then add the non-bonding outer electrons." },
   singlyFirst:  { label: "Paired electrons too early", tip: "Place electrons one at a time at the top, bottom, left and right of the shell before you pair them up." },
   shellCount:   { label: "Electrons in the inner shells", tip: "Inner shells are full: 2 in the 1st shell, 8 in the 2nd (and 3rd)." },
   cationE:      { label: "Electrons in the metal ion", tip: "The metal ion keeps only its full inner shells (e.g. Na⁺ is 2.8); its old outer shell is gone." },
@@ -525,7 +529,7 @@ function render(c, kind, live) {
   });
   vb = bbox(Z.atoms, 14);
   if (c.type === "ionic") {
-    vb[0] -= 64; vb[2] += 64 + 56; vb[1] -= 34; vb[3] += 34;
+    vb[0] -= 64; vb[2] += 64 + 56; vb[1] -= 34; vb[3] += 34 + 14;
     if (kind === "final") Z.atoms.forEach(function (a) {
       var io = D.ion[a.id], r = rOut(a.n) + 14, x0 = a.x - r, x1 = a.x + r, y0 = a.y - r, y1 = a.y + r;
       if (io.br) s += '<path class="brk" d="M' + (x0 + 14) + " " + y0 + "H" + x0 + "V" + y1 + "H" + (x0 + 14) + "M" + (x1 - 14) + " " + y0 + "H" + x1 + "V" + y1 + "H" + (x1 - 14) + '"/>';
@@ -596,9 +600,17 @@ function tapZone(z, Z) {
   if (D.pen === "er") { if (arr.length) { arr.pop(); Sound.tap(); } return; }
   if (arr.length >= z.cap) { toast(z.kind === "ov" ? "This overlap is full." : "That spot is full. Use the eraser to remove an electron."); return; }
   var ids = z.kind === "own" ? [z.atom] : z.atoms;
+  if (z.kind === "ov") { // only the atom that owns this pen symbol must have full inner shells
+    var owner = z.atoms.filter(function (id) { return ownSyms(id, Z)[0] === D.pen; });
+    ids = owner.length ? owner : z.atoms.filter(function (id) { return Z.byId[id].n > 1; }).slice(0, 1);
+  }
   for (var i = 0; i < ids.length; i++) {
     var a = Z.byId[ids[i]], upto = z.kind === "own" ? z.shell - 1 : a.n - 1;
     for (var j = 1; j <= upto; j++) if (shellCount(a.id, j, Z) < (j === 1 ? 2 : 8)) { slip("innerFirst"); return; }
+  }
+  if (G.c.type === "covalent" && z.kind === "own") {
+    var at = Z.byId[z.atom];
+    if (z.shell === at.n && at.bonded.length && Z.zones.some(function (y) { return y.kind === "ov" && y.atoms.indexOf(z.atom) > -1 && (D.e[y.key] || []).length < 2 * y.bo; })) { slip("bondFirst"); return; }
   }
   if (z.kind === "own" && arr.length === 1) {
     var a2 = Z.byId[z.atom], sharedShell = G.c.type === "covalent" && z.shell === a2.n && a2.bonded.length;
@@ -867,7 +879,7 @@ var STEP = {
     title: function (c) { return "Fill in the electrons<small>Use ● for one " + (c.type === "ionic" ? "ion's" : "atom's") + " electrons and ✕ for the other's.</small>"; },
     howto: function (c) {
       return "Pick <b>● or ✕</b>, then tap a dashed spot. Fill the <b>1st shell (2)</b> before the next shells (8). Add electrons <b>singly</b> at top, right, bottom and left before pairing." +
-        (c.type === "ionic" ? " Draw the electrons the non-metal gained with the <b>metal's</b> symbol." : " Shared pairs go in the <b>overlap</b>; leftover outer electrons go in <b>pairs</b>.");
+        (c.type === "ionic" ? " Draw the electrons the non-metal gained with the <b>metal's</b> symbol." : " Fill the <b>shared pairs in the overlap first</b>, then add the leftover outer electrons in <b>pairs</b>.");
     },
     body: function () {
       return '<div class="tools"><span class="lbl">Pen</span><button class="pen" type="button" data-pen="d" aria-pressed="true">● Dot</button><button class="pen" type="button" data-pen="x" aria-pressed="false">✕ Cross</button>' +
@@ -919,7 +931,7 @@ var STEP = {
         var el = w === "cat" ? c.cat : c.an;
         return '<div class="' + rowCls(i) + '"><div class="el-head"><span class="sym">' + el + '</span><small>' + (w === "cat" ? "metal ion" : "non-metal ion") + "</small></div>" +
           '<div class="seg"><button class="tap" type="button" data-br="' + w + '" aria-pressed="false">[ ] Brackets</button></div>' +
-          '<div class="seg"><span class="lbl">charge</span>' + [1, 2, 3, -1, -2, -3].map(function (ch) { return '<button class="tap" type="button" aria-pressed="false" data-g="ch-' + w + '" data-v="' + ch + '">' + chStr(ch) + "</button>"; }).join("") + "</div>" +
+          [[1, 2, 3], [-1, -2, -3]].map(function (row, r) { return '<div class="seg"><span class="lbl"' + (r ? ' aria-hidden="true" style="visibility:hidden"' : "") + '>charge</span>' + row.map(function (ch) { return '<button class="tap" type="button" aria-pressed="false" data-g="ch-' + w + '" data-v="' + ch + '">' + chStr(ch) + "</button>"; }).join("") + "</div>"; }).join("") +
           '<div class="seg"><span class="lbl">number</span>' + [1, 2, 3].map(function (n) { return '<button class="tap num" type="button" aria-pressed="false" data-g="co-' + w + '" data-v="' + n + '">' + n + "</button>"; }).join("") + "</div></div>";
       }).join("") + "</div>";
     },
