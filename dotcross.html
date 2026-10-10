@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#069494">
+<title>Dot &amp; Cross Quest · Science is Khool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Science is Khool · Tropical Punch — "Arcade Punch" game skin */
+:root {
+  --orange: #FF8243; --pink: #FFC0CB; --yellow: #FCE883; --teal: #069494; --teal-ink: #057A7A;
+  --orange-tint: #FFE6DA; --pink-tint: #FFEEF1; --yellow-tint: #FEF8D9; --teal-tint: #DDF2F2;
+  --ink: #1F2A2E; --muted: #56656A; --line: #E4E8E9; --bg: #FFFFFF;
+  --good: #1E9E62; --good-tint: #D8F3E4; --bad: #E2463A;
+  --b: 3px solid var(--ink);
+  --font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); }
+body { font: 16px/1.5 var(--font); min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+.sub { font-size: .65em; position: relative; bottom: -.25em; line-height: 0; }
+.sup { font-size: .65em; position: relative; top: -.55em; line-height: 0; margin-left: .03em; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+.wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.card { background: #fff; border: var(--b); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: var(--b); border-radius: 16px; padding: 14px 18px; font-weight: 800; font-size: 1.1rem; background: var(--orange); color: var(--ink); box-shadow: 0 5px 0 var(--ink); transition: transform .08s, box-shadow .08s; user-select: none; -webkit-user-select: none; }
+.btn:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn.big { width: 100%; font-size: 1.12rem; text-transform: uppercase; letter-spacing: .03em; padding: 15px; }
+.btn.alt { background: #fff; } .btn.teal { background: var(--teal); color: #fff; } .btn.small { padding: 8px 14px; font-size: .95rem; box-shadow: 0 3px 0 var(--ink); }
+.pill { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; border: 2px solid var(--ink); border-radius: 99px; padding: 2px 10px; background: #fff; color: var(--ink); }
+.icon-btn { width: 42px; height: 42px; border-radius: 12px; border: var(--b); background: #fff; display: grid; place-items: center; box-shadow: 0 3px 0 var(--ink); padding: 0; flex: none; }
+.icon-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+.icon-btn svg { width: 20px; height: 20px; } .icon-btn.off { opacity: .45; }
+
+.topbar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 2px solid var(--line); background: #fff; }
+.topbar .brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; text-decoration: none; color: var(--ink); }
+.topbar .brand img { width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid var(--ink); background: var(--yellow); object-fit: cover; flex: none; }
+.topbar .brand > span { min-width: 0; }
+.topbar .brand b { font-weight: 800; font-size: 1.05rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.topbar .brand small { display: block; font-size: .72rem; color: var(--muted); font-weight: 600; line-height: 1.2; }
+
+/* start */
+.start { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; margin: auto 0; padding-block: 8px 20px; }
+.hero { background: var(--teal); color: #fff; padding: 22px 22px 0; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.hero h1 { margin: 4px 0 0; font-size: clamp(1.9rem, 6.5vw, 2.7rem); line-height: 1.08; font-weight: 800; }
+.hero h1 em { font-style: normal; background: var(--yellow); color: var(--ink); border: var(--b); border-radius: 14px; padding: 0 10px; display: inline-block; transform: rotate(-2deg); }
+.hero p { margin: 0; font-weight: 600; max-width: 42ch; }
+.hero ol { margin: 0; padding-left: 22px; font-weight: 600; font-size: .95rem; }
+.duo { display: flex; justify-content: space-around; gap: 10px; margin-top: 4px; }
+.duo img { width: 46%; max-width: 170px; display: block; }
+.form { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.form h2 { margin: 0; font-size: 1.25rem; font-weight: 800; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fields .full { grid-column: 1 / -1; }
+label.f { display: flex; flex-direction: column; gap: 4px; font-weight: 700; font-size: .9rem; }
+label.f input, label.f select { font-size: 16px; padding: 12px; border: 2.5px solid var(--ink); border-radius: 12px; background: #fff; width: 100%; min-width: 0; }
+label.f input:focus, label.f select:focus { outline: 3px solid var(--yellow); outline-offset: 1px; }
+.form-err { color: var(--bad); font-weight: 700; font-size: .9rem; min-height: 1.2em; margin: -4px 0 0; }
+.modes { display: grid; gap: 12px; }
+.mode { text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 14px 16px; }
+.mode b { font-size: 1.15rem; } .mode span { font-weight: 600; font-size: .9rem; } .mode small { font-weight: 700; font-size: .8rem; opacity: .85; }
+@media (min-width: 760px) { .start { grid-template-columns: 1.1fr 1fr; gap: 28px; } }
+
+/* play */
+.play { display: grid; grid-template-columns: 1fr; border: var(--b); border-radius: 22px; overflow: hidden; box-shadow: 6px 6px 0 var(--ink); background: #fff; margin-block: 4px 16px; }
+.hud { background: var(--teal); color: #fff; padding: 14px; display: flex; flex-direction: column; gap: 10px; border-bottom: var(--b); }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.score { font-size: 1.9rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.score small { display: block; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; opacity: .9; margin-bottom: 2px; }
+.lvl { background: var(--yellow); color: var(--ink); font-weight: 800; border: var(--b); border-radius: 10px; padding: 2px 10px; transform: rotate(-3deg); box-shadow: 2px 2px 0 var(--ink); white-space: nowrap; }
+.dots { display: flex; gap: 6px; flex-wrap: wrap; }
+.dots i { width: 24px; height: 9px; border-radius: 99px; background: rgba(255,255,255,.35); border: 2px solid var(--ink); }
+.dots i.now { background: #fff; } .dots i.ok { background: var(--yellow); } .dots i.no { background: var(--orange); }
+.cmp { background: #fff; color: var(--ink); border: var(--b); border-radius: 16px; padding: 12px; text-align: center; }
+.cmp small { display: block; font-weight: 700; color: var(--muted); font-size: .85rem; }
+.cmp b { display: block; font-size: clamp(1.4rem, 5.5vw, 1.9rem); line-height: 1.15; font-weight: 800; }
+.cmp .els { display: block; font-weight: 800; font-size: 1.2rem; color: var(--teal-ink); }
+.steps { display: flex; gap: 6px; flex-wrap: wrap; }
+.steps span { font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; border: 2px solid var(--ink); background: rgba(255,255,255,.35); color: var(--ink); }
+.steps span.now { background: #fff; } .steps span.ok { background: var(--yellow); } .steps span.half { background: var(--pink); } .steps span.no { background: var(--orange); }
+.notes { background: rgba(255,255,255,.92); color: var(--ink); border: 2.5px solid var(--ink); border-radius: 14px; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; font-size: .92rem; font-weight: 600; }
+.notes:empty { display: none; }
+.notes b { font-weight: 800; color: var(--teal-ink); }
+
+.controls { padding: 16px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+#stage { display: flex; flex-direction: column; gap: 12px; }
+.ask { font-weight: 800; font-size: 1.15rem; margin: 0; text-wrap: balance; }
+.ask small { display: block; font-weight: 600; font-size: .9rem; color: var(--muted); }
+.bonds { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.bond { padding: 0; border: var(--b); border-radius: 18px; background: #fff; box-shadow: 0 5px 0 var(--ink); overflow: hidden; display: flex; flex-direction: column; }
+.bond img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; pointer-events: none; }
+.bond span { font-weight: 800; padding: 6px; border-top: 2.5px solid var(--ink); }
+.bond[aria-pressed="true"] { outline: 5px solid var(--yellow); outline-offset: -5px; transform: translateY(3px); box-shadow: 0 2px 0 var(--ink); }
+.el-row { border: 2.5px solid var(--ink); border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; background: var(--yellow-tint); }
+.el-row.p2 { background: var(--pink-tint); }
+.el-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-weight: 800; }
+.el-head .sym { font-size: 1.4rem; }
+.el-head small { font-weight: 600; color: var(--muted); }
+.shells { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-weight: 800; font-size: 1.3rem; }
+.shells input { width: 48px; height: 52px; text-align: center; font-size: 1.4rem; font-weight: 800; border: var(--b); border-radius: 12px; background: #fff; }
+.shells input:focus { outline: 3px solid var(--orange); outline-offset: 1px; }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.tap { font-weight: 800; font-size: 1rem; padding: 9px 14px; border: 2.5px solid var(--ink); border-radius: 12px; background: #fff; box-shadow: 0 3px 0 var(--ink); min-width: 46px; }
+.tap[aria-pressed="true"] { background: var(--yellow); transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+.tap:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+.tap.num { font-size: 1.15rem; }
+.lbl { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.hint { background: var(--yellow-tint); border: 2.5px solid var(--ink); border-radius: 14px; padding: 10px 12px; font-weight: 600; font-size: .95rem; margin: 0; }
+.howto { background: var(--teal-tint); border: 2.5px solid var(--ink); border-radius: 14px; padding: 10px 12px; font-weight: 600; font-size: .92rem; margin: 0; }
+.howto b { color: var(--teal-ink); }
+.msg-err { background: var(--orange-tint); border: 2.5px solid var(--ink); border-radius: 14px; padding: 10px 12px; font-weight: 700; margin: 0; }
+.reveal, .why { border: var(--b); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.reveal { background: var(--orange-tint); } .why { background: var(--good-tint); }
+.reveal h3, .why h3 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+.reveal p, .why p { margin: 0; font-weight: 600; }
+.reveal .ans { background: #fff; border: 2px solid var(--ink); border-radius: 12px; padding: 8px 12px; font-weight: 700; }
+.flash { text-align: center; font-weight: 800; font-size: 1.3rem; padding: 16px; border: var(--b); border-radius: 16px; background: var(--good-tint); }
+.flash.big { background: var(--yellow); }
+
+/* drawing */
+.draw { border: var(--b); border-radius: 18px; background: #fff; overflow: hidden; position: relative; }
+.draw svg { display: block; width: 100%; height: auto; max-height: 64vh; user-select: none; -webkit-user-select: none; }
+.draw.build svg { touch-action: none; }
+.why .draw, .reveal .draw { background: #fff; }
+.sh { fill: none; stroke: var(--ink); stroke-width: 2.2; }
+.nuc { stroke: var(--ink); stroke-width: 2.5; }
+.nuc-t { font: 800 21px var(--font); text-anchor: middle; dominant-baseline: central; fill: var(--ink); pointer-events: none; }
+.e-dot { fill: var(--ink); }
+.e-x { stroke: var(--ink); stroke-width: 3.2; stroke-linecap: round; fill: none; }
+.slot { fill: var(--teal-tint); fill-opacity: .6; stroke: var(--teal); stroke-width: 1.6; stroke-dasharray: 3 3; }
+.brk { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linejoin: miter; }
+.chg { font: 800 26px var(--font); fill: var(--ink); }
+.coef { font: 800 46px var(--font); fill: var(--ink); text-anchor: end; dominant-baseline: central; }
+.bzone { fill: var(--teal-tint); fill-opacity: .45; stroke: var(--teal); stroke-width: 2; stroke-dasharray: 8 6; }
+.tray-bg { fill: var(--yellow-tint); stroke: var(--ink); stroke-width: 2.5; }
+.tray-t { font: 800 15px var(--font); text-anchor: middle; fill: var(--muted); letter-spacing: .04em; }
+.cslot { fill: #fff; stroke: var(--teal); stroke-width: 2.5; stroke-dasharray: 7 6; }
+.cslot.on { fill: var(--yellow); fill-opacity: .7; }
+.cslot-t { font: 700 14px var(--font); text-anchor: middle; fill: var(--teal-ink); }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pen { font-weight: 800; font-size: 1rem; padding: 8px 14px; border: 2.5px solid var(--ink); border-radius: 12px; background: #fff; box-shadow: 0 3px 0 var(--ink); }
+.pen[aria-pressed="true"] { background: var(--yellow); transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+.shell-ctl { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+.shell-ctl .el-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; }
+.shell-ctl b { font-size: 1.2rem; min-width: 4.5em; text-align: center; }
+.ion-ctl { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 560px) { .ion-ctl { grid-template-columns: 1fr 1fr; } }
+.toast { pointer-events: none; position: fixed; left: 50%; top: 12px; translate: -50% 0; z-index: 60; max-width: min(92vw, 520px); font-weight: 700; font-size: 1rem; padding: 12px 16px; border: var(--b); border-radius: 16px; box-shadow: 4px 4px 0 var(--ink); background: #fff; text-align: center; }
+.toast.warn { background: var(--orange-tint); }
+@media (min-width: 900px) {
+  .play { grid-template-columns: minmax(280px, .75fr) 1.25fr; }
+  .hud { border-bottom: 0; border-right: var(--b); padding: 18px; }
+  .controls { padding: 20px; }
+}
+
+/* results */
+.results { display: grid; gap: 18px; grid-template-columns: 1fr; padding-block: 8px 20px; }
+.res-hero { background: var(--teal); color: #fff; padding: 22px; display: flex; gap: 18px; align-items: center; }
+.big-ring { --p: 0; width: 120px; height: 120px; flex: none; border-radius: 50%; border: var(--b); background: conic-gradient(var(--yellow) calc(var(--p) * 1%), #fff 0); display: grid; place-items: center; }
+.big-ring span { width: 88px; height: 88px; border-radius: 50%; background: #fff; color: var(--ink); border: var(--b); display: grid; place-items: center; font-weight: 800; font-size: 1.7rem; }
+.res-hero h2 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.15; font-weight: 800; } .res-hero p { margin: 0; font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.stat { border: var(--b); border-radius: 14px; padding: 8px 10px; box-shadow: 0 4px 0 var(--ink); }
+.stat span { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.stat b { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.stat:nth-child(1) { background: var(--yellow-tint); } .stat:nth-child(2) { background: var(--pink-tint); } .stat:nth-child(3) { background: var(--teal-tint); } .stat:nth-child(4) { background: var(--orange-tint); }
+.panel { padding: 18px; display: flex; flex-direction: column; gap: 12px; } .panel h3 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 10.5em 1fr 3.2em; gap: 10px; align-items: center; font-weight: 700; font-size: .92rem; }
+.bar { height: 14px; border: 2px solid var(--ink); border-radius: 99px; overflow: hidden; background: #fff; }
+.bar i { display: block; height: 100%; background: var(--teal); } .bar i.low { background: var(--orange); }
+.bar-row .n { text-align: right; font-variant-numeric: tabular-nums; }
+.weak, .review { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.weak li { border: 2.5px solid var(--ink); border-radius: 14px; padding: 10px 12px; background: var(--orange-tint); }
+.weak li b { display: block; } .weak li span { font-size: .9rem; } .weak li.good { background: var(--good-tint); }
+.review li { border-bottom: 2px solid var(--line); padding: 6px 0 8px; font-size: .95rem; } .review li:last-child { border-bottom: 0; }
+.review .you { color: var(--bad); font-weight: 700; } .review .key { color: var(--good); font-weight: 800; }
+.send { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-weight: 700; padding: 12px 14px; border: 2.5px solid var(--ink); border-radius: 14px; background: var(--teal-tint); }
+.send.err { background: var(--orange-tint); }
+.res-actions { display: flex; gap: 12px; flex-wrap: wrap; } .res-actions .btn { flex: 1 1 200px; }
+@media (min-width: 760px) { .results { grid-template-columns: 1fr 1fr; align-items: start; } .results .span { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .stats { grid-template-columns: repeat(2, 1fr); } .res-hero { flex-direction: column; text-align: center; } .bar-row { grid-template-columns: 8.6em 1fr 3em; font-size: .85rem; } }
+footer { text-align: center; color: var(--muted); font-size: .82rem; padding: 14px 16px 20px; }
+footer a { color: var(--teal-ink); font-weight: 700; }
+canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="https://scienceiskhool.github.io/scienceiskhool/" target="_blank" rel="noopener">
+    <img src="https://scienceiskhool.github.io/scienceiskhool/assets/img/head.png" alt="" onerror="this.style.visibility='hidden'">
+    <span><b>Dot &amp; Cross Quest</b><small>Science is Khool · Chemical bonding</small></span>
+  </a>
+  <button class="icon-btn" id="btn-sound" type="button" aria-label="Sound effects" title="Sound effects">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+  </button>
+  <button class="icon-btn" id="btn-full" type="button" aria-label="Full screen" title="Full screen" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+  </button>
+</header>
+
+<main class="wrap">
+  <!-- START -->
+  <section id="scr-start" class="start">
+    <div class="card hero">
+      <span class="pill" style="align-self:flex-start">Chemistry · Bonding diagrams</span>
+      <h1>Dot &amp; Cross <em>Quest</em></h1>
+      <p>Draw dot-and-cross diagrams step by step, the way you would in an exam:</p>
+      <ol><li>Ionic or covalent?</li><li>Electronic configurations</li><li>Lose, gain or share electrons</li><li>Draw the empty shells</li><li>Covalent: copy and overlap the atoms</li><li>Fill in the dots and crosses</li><li>Ionic: brackets, charges and numbers</li></ol>
+      <div class="duo"><img id="img-duo-i" alt="Two cartoon atoms passing an electron (ionic bonding)"><img id="img-duo-c" alt="Two cartoon atoms sharing electrons (covalent bonding)"></div>
+    </div>
+    <form class="card form" id="form-start" novalidate>
+      <h2>Sign in to play</h2>
+      <div class="fields">
+        <label class="f full" for="in-name">Name<input id="in-name" maxlength="60" autocomplete="name" required></label>
+        <label class="f" for="in-cls">Class<select id="in-cls" required><option value="">Choose…</option></select></label>
+        <label class="f" for="in-reg">Register no.<input id="in-reg" inputmode="numeric" pattern="[0-9]*" maxlength="2" required></label>
+      </div>
+      <p class="form-err" id="form-err" role="alert"></p>
+      <div class="modes">
+        <button class="btn mode" type="submit" data-mode="guided"><b>📘 Worked examples</b><span>Sodium oxide, magnesium fluoride, oxygen gas and ammonia, with tips at every step.</span><small id="best-guided">Best: 0</small></button>
+        <button class="btn mode teal" type="submit" data-mode="challenge" id="btn-challenge"><b>🏆 Challenge</b><span id="chal-desc">Ionic and covalent substances in turn. No hints!</span><small id="best-challenge">Best: 0</small></button>
+      </div>
+    </form>
+  </section>
+
+  <!-- PLAY -->
+  <section id="scr-play" class="play" hidden>
+    <div class="hud">
+      <div class="row">
+        <div class="score"><small>Points</small><span id="txt-points">0</span></div>
+        <span class="lvl" id="txt-count"></span>
+      </div>
+      <div class="row"><div class="dots" id="dots"></div><button class="btn small alt" id="btn-hint" type="button">💡 Hint</button></div>
+      <div class="cmp" aria-live="polite"><small>Draw the dot-and-cross diagram of</small><b id="cmp-name"></b><span class="els" id="cmp-els"></span></div>
+      <div class="steps" id="steps"></div>
+      <div class="notes" id="notes"></div>
+    </div>
+    <div class="controls">
+      <p class="hint" id="hint-box" hidden></p>
+      <div id="stage"></div>
+      <div class="flash" id="flash" hidden></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="scr-result" class="results" hidden>
+    <div class="card res-hero span">
+      <div class="big-ring" id="res-ring"><span id="res-pct">0%</span></div>
+      <div><h2 id="res-title"></h2><p id="res-msg"></p></div>
+    </div>
+    <div class="stats span">
+      <div class="stat"><span>Steps right first time</span><b id="res-v1"></b></div>
+      <div class="stat"><span>Perfect diagrams</span><b id="res-v2"></b></div>
+      <div class="stat"><span>Time</span><b id="res-time">0:00</b></div>
+      <div class="stat"><span>Points</span><b id="res-points">0</b></div>
+    </div>
+    <div class="card panel">
+      <h3>How you did</h3>
+      <div class="bars" id="res-bars"></div>
+      <h3 style="margin-top:6px">What to work on</h3>
+      <ul class="weak" id="res-weak"></ul>
+    </div>
+    <div class="card panel"><h3>Check your mistakes</h3><ul class="review" id="res-review"></ul></div>
+    <div class="send span" id="send" aria-live="polite"><span id="send-msg">Sending your results to Ms Khoo…</span><button class="btn small alt" id="btn-resend" type="button" hidden>Try again</button></div>
+    <div class="res-actions span">
+      <button class="btn big teal" id="btn-home" type="button">Home</button>
+      <button class="btn big" id="btn-again" type="button">Play again ↻</button>
+    </div>
+  </section>
+</main>
+<footer>Designed by Ms Khoo Xiang Yun · <a href="https://scienceiskhool.github.io/scienceiskhool/" target="_blank" rel="noopener">Science is Khool</a></footer>
+<div class="toast" id="toast" role="status" hidden></div>
+<canvas id="confetti" hidden></canvas>
+
+<script>
+(function () {
+"use strict";
+
+/* =================== SETTINGS (safe to edit) =================== */
+var SUBMIT_URL = "https://script.google.com/macros/s/AKfycbxCTjRCQzLlWXmmY-5R0p75WCmeFLzC9ZM3gNbGRXpcc_d9qHMXdyCn12B4dHpnrBWe/exec";
+var SHEET_TAB = "Dot and Cross";              // tab name in your Google Sheet
+var CHALLENGE_IONIC = 3, CHALLENGE_COVALENT = 3; // substances per challenge (alternating)
+var MUST_IONIC = [["Al", "O"]];               // always in the challenge
+var MUST_COVALENT = ["CO2", "CH4"];           // always in the challenge
+var TRIES = 2;                                 // tries per step before the answer is shown
+var CLASSES = [];
+["S1", "S2", "S3", "S4"].forEach(function (l) { ["Charity", "Courage", "Faith", "Hope", "Humility", "Integrity", "Love", "Respect", "Joy"].forEach(function (v) { CLASSES.push(l + " " + v); }); });
+CLASSES.push("S5 Faith", "Other");
+
+/* Your bonding pictures (Google Drive) */
+var IMG = {
+  ionic: "https://lh3.googleusercontent.com/d/1qan1hPByKhA_LbvlmwSRdsIZc3vqcmVB",
+  covalent: "https://lh3.googleusercontent.com/d/1QpDiLAVSf0oN3aKz4YQ32HtWS9P8XSNs",
+  ionicBlank: "https://lh3.googleusercontent.com/d/1QWOZgXcOYZXMtmfMFOoMEDR_e3SuMoQ1",
+  covalentBlank: "https://lh3.googleusercontent.com/d/1erPk4yIeia1SdiSozLvolWllGA517LvC"
+};
+
+/* =================== ELEMENTS 1–20 =================== */
+var EL = {
+  H: { n: "hydrogen", z: 1, c: [1] }, Li: { n: "lithium", z: 3, c: [2, 1], m: 1 },
+  C: { n: "carbon", z: 6, c: [2, 4] }, N: { n: "nitrogen", z: 7, c: [2, 5], ide: "nitride" }, O: { n: "oxygen", z: 8, c: [2, 6], ide: "oxide" },
+  F: { n: "fluorine", z: 9, c: [2, 7], ide: "fluoride" }, Na: { n: "sodium", z: 11, c: [2, 8, 1], m: 1 }, Mg: { n: "magnesium", z: 12, c: [2, 8, 2], m: 1 },
+  Al: { n: "aluminium", z: 13, c: [2, 8, 3], m: 1 }, Si: { n: "silicon", z: 14, c: [2, 8, 4] }, P: { n: "phosphorus", z: 15, c: [2, 8, 5] },
+  S: { n: "sulfur", z: 16, c: [2, 8, 6], ide: "sulfide" }, Cl: { n: "chlorine", z: 17, c: [2, 8, 7], ide: "chloride" },
+  K: { n: "potassium", z: 19, c: [2, 8, 8, 1], m: 1 }, Ca: { n: "calcium", z: 20, c: [2, 8, 8, 2], m: 1 }
+};
+function outer(s) { var c = EL[s].c; return c[c.length - 1]; }
+function needs(s) { return s === "H" ? 1 : 8 - outer(s); }
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+function cfg(s) { return EL[s].c.join("."); }
+function parseF(f) { var out = [], re = /([A-Z][a-z]?)(\d*)/g, m; while ((m = re.exec(f))) if (m[1]) out.push([m[1], m[2] ? +m[2] : 1]); return out; }
+function bondOrder(a, b) { return Math.min(needs(a), needs(b)); }
+
+/* =================== SUBSTANCES =================== */
+function mkIonic(a, b) {
+  var ca = outer(a), cb = needs(b), l = ca * cb / gcd(ca, cb), na = l / ca, nb = l / cb;
+  return { type: "ionic", key: a + b, name: EL[a].n + " " + EL[b].ide, formula: a + (na > 1 ? na : "") + b + (nb > 1 ? nb : ""),
+    els: [a, b], cat: a, an: b, ca: ca, cb: cb, na: na, nb: nb };
+}
+var COV = { // key: [name, formula, central atom (null = two-atom molecule)]
+  H2: ["hydrogen gas", "H2", null], O2: ["oxygen gas", "O2", null], N2: ["nitrogen gas", "N2", null], F2: ["fluorine gas", "F2", null],
+  Cl2: ["chlorine gas", "Cl2", null], HCl: ["hydrogen chloride", "HCl", null], HF: ["hydrogen fluoride", "HF", null],
+  H2O: ["water", "H2O", "O"], H2S: ["hydrogen sulfide", "H2S", "S"], NH3: ["ammonia", "NH3", "N"], PH3: ["phosphine", "PH3", "P"],
+  CH4: ["methane", "CH4", "C"], SiH4: ["silane", "SiH4", "Si"], CO2: ["carbon dioxide", "CO2", "C"]
+};
+function mkCov(k) {
+  var r = COV[k], counts = {}, els = [];
+  parseF(r[1]).forEach(function (x) { if (!counts[x[0]]) els.push(x[0]); counts[x[0]] = (counts[x[0]] || 0) + x[1]; });
+  return { type: "covalent", key: k, name: r[0], formula: r[1], els: els, counts: counts, central: r[2] };
+}
+var IONIC_POOL = [["Na", "Cl"], ["Mg", "O"], ["Ca", "Cl"], ["K", "F"], ["Li", "F"], ["Li", "O"], ["K", "O"], ["Ca", "S"], ["Na", "S"], ["Mg", "Cl"], ["Al", "F"], ["Ca", "F"], ["Mg", "N"], ["K", "Cl"], ["Na", "F"]];
+var EXAMPLES = function () { return [mkIonic("Na", "O"), mkIonic("Mg", "F"), mkCov("O2"), mkCov("NH3")]; };
+function challengeRound() {
+  var ion = MUST_IONIC.map(function (p) { return mkIonic(p[0], p[1]); });
+  shuffle(IONIC_POOL.filter(function (p) { return !MUST_IONIC.some(function (m) { return m[0] === p[0] && m[1] === p[1]; }); }))
+    .slice(0, Math.max(0, CHALLENGE_IONIC - ion.length)).forEach(function (p) { ion.push(mkIonic(p[0], p[1])); });
+  var cov = MUST_COVALENT.map(mkCov);
+  shuffle(Object.keys(COV).filter(function (k) { return MUST_COVALENT.indexOf(k) < 0; }))
+    .slice(0, Math.max(0, CHALLENGE_COVALENT - cov.length)).forEach(function (k) { cov.push(mkCov(k)); });
+  ion = shuffle(ion); cov = shuffle(cov);
+  var out = [];
+  for (var i = 0; i < Math.max(ion.length, cov.length); i++) { if (ion[i]) out.push(ion[i]); if (cov[i]) out.push(cov[i]); }
+  return out;
+}
+
+/* =================== HELPERS =================== */
+var $ = function (id) { return document.getElementById(id); };
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+function fx(f) { return esc(f).replace(/([A-Za-z\)\]])(\d+)/g, '$1<span class="sub">$2</span>'); }
+function chStr(ch) { var a = Math.abs(ch); return (a === 1 ? "" : a) + (ch > 0 ? "+" : "−"); }
+function ionHtml(sym, ch) { return esc(sym) + '<span class="sup">' + chStr(ch) + "</span>"; }
+function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem("sik:" + k)); localStorage.setItem("sik:" + k, JSON.stringify(v)); } catch (e) { return null; } }
+function mmss(s) { s = Math.round(s); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
+function toast(html, warn) {
+  var t = $("toast"); t.innerHTML = html; t.className = "toast" + (warn ? " warn" : ""); t.hidden = false;
+  clearTimeout(toast.t); toast.t = setTimeout(function () { t.hidden = true; }, warn ? 3400 : 2200);
+}
+
+/* =================== ERRORS =================== */
+var ERR = {
+  bondType:     { label: "Mixed up ionic and covalent", tip: "Metal + non-metal → ionic. Non-metal + non-metal → covalent." },
+  config:       { label: "Electronic configurations", tip: "Use the atomic number and fill shells 2, 8, 8: e.g. Cl (17) = 2.8.7." },
+  ionicShare:   { label: "Said ionic atoms share electrons", tip: "In ionic bonding, the metal LOSES electrons and the non-metal GAINS them." },
+  loseGain:     { label: "Mixed up losing and gaining", tip: "Metals lose their outer electrons; non-metals gain electrons to fill their outer shell." },
+  covShare:     { label: "Said covalent atoms lose or gain electrons", tip: "In covalent bonding, non-metal atoms SHARE electrons." },
+  eCount:       { label: "Number of electrons lost, gained or shared", tip: "Metals lose all their outer electrons. Non-metals need 8 − (outer electrons); hydrogen needs 1." },
+  shells:       { label: "Number of shells", tip: "Draw one shell for each number in the electronic configuration (Cl 2.8.7 → 3 shells)." },
+  shellsCation: { label: "Shells of a metal ion", tip: "A metal ion has lost its whole outer shell: Na 2.8.1 → Na⁺ 2.8, so draw only 2 shells." },
+  central:      { label: "Choosing the central atom", tip: "The central atom is the one that needs to share the most electrons (N in NH₃, C in CH₄)." },
+  atomCount:    { label: "Number of atoms in the molecule", tip: "Follow the formula: NH₃ has 1 N and 3 H, so copy the H atom 3 times." },
+  innerFirst:   { label: "Filled an outer shell too early", tip: "Fill shells from the inside out: the 1st shell holds 2 electrons, then the 2nd and 3rd shells hold 8." },
+  singlyFirst:  { label: "Paired electrons too early", tip: "Place electrons one at a time at the top, bottom, left and right of the shell before you pair them up." },
+  shellCount:   { label: "Electrons in the inner shells", tip: "Inner shells are full: 2 in the 1st shell, 8 in the 2nd (and 3rd)." },
+  cationE:      { label: "Electrons in the metal ion", tip: "The metal ion keeps only its full inner shells (e.g. Na⁺ is 2.8); its old outer shell is gone." },
+  symbolMix:    { label: "Mixed dots and crosses in one atom", tip: "Use just one symbol for all of an atom's own electrons." },
+  sameSymbol:   { label: "Same symbol for both atoms", tip: "Use dots for one atom and crosses for the other, so you can see where each electron came from." },
+  bondPair:     { label: "Shared pairs in the overlap", tip: "Each shared pair is one electron from each atom (● + ✕) in the overlap. Single bond = 1 pair, double = 2, triple = 3." },
+  outerCount:   { label: "Outer shell not full", tip: "After bonding, every outer shell holds 8 electrons (hydrogen: 2). In molecules, count the shared electrons for both atoms." },
+  lonePair:     { label: "Unpaired non-bonding electrons", tip: "Outer electrons that are not shared sit in pairs (lone pairs)." },
+  transferred:  { label: "Transferred electrons", tip: "The negative ion's outer shell holds its own electrons plus the ones it gained, drawn with the metal's symbol (O²⁻: 6 ✕ + 2 ●)." },
+  brackets:     { label: "Missing square brackets", tip: "Put every ion inside square brackets." },
+  charge:       { label: "Ion charges", tip: "Charge = electrons lost (+) or gained (−), written at the top right of the bracket." },
+  coef:         { label: "Balancing the charges", tip: "Use the smallest numbers that make total + charge equal total − charge: e.g. 2[Na]⁺ [O]²⁻." }
+};
+
+/* =================== SOUND =================== */
+var Sound = {
+  on: store("sfx") !== false, ctx: null,
+  tone: function (f, type, d, g, delay) {
+    if (!this.on) return;
+    try {
+      this.ctx = this.ctx || new (window.AudioContext || window.webkitAudioContext)();
+      if (this.ctx.state === "suspended") this.ctx.resume();
+      var t = this.ctx.currentTime + (delay || 0), o = this.ctx.createOscillator(), v = this.ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, t); v.gain.setValueAtTime(g, t); v.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      o.connect(v); v.connect(this.ctx.destination); o.start(t); o.stop(t + d);
+    } catch (e) {}
+  },
+  tap: function () { this.tone(440, "sine", .05, .04); },
+  pop: function () { this.tone(660, "sine", .07, .06); },
+  ok: function () { this.tone(523, "sine", .12, .16); this.tone(659, "sine", .22, .16, .06); },
+  no: function () { this.tone(220, "triangle", .3, .14); this.tone(207, "triangle", .45, .12, .1); },
+  end: function () { [523, 659, 784, 1047].forEach(function (n, i) { Sound.tone(n, "square", .3, .06, i * .15); }); }
+};
+$("btn-sound").classList.toggle("off", !Sound.on);
+$("btn-sound").addEventListener("click", function () { Sound.on = !Sound.on; store("sfx", Sound.on); $("btn-sound").classList.toggle("off", !Sound.on); });
+if (document.fullscreenEnabled) { $("btn-full").hidden = false; $("btn-full").addEventListener("click", function () { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(function () {}); }); }
+
+/* =================== DRAWING ENGINE =================== */
+var NUC = 22, OV = 30;                       // nucleus radius, how much outer shells overlap
+function R(k) { return 24 + 34 * k; }        // radius of shell k
+function rOut(n) { return n ? R(n) : NUC + 4; }
+var DIRS = { N: [0, -1], E: [1, 0], S: [0, 1], W: [-1, 0] }, ORDER = ["N", "E", "S", "W"], OPP = { N: "S", S: "N", E: "W", W: "E" };
+var D = null;   // drawing state for the current substance
+var B = { drag: null, target: null, tray: [] }; // build (drag) state
+function newDrawing(c) {
+  var sh = {}; c.els.forEach(function (s) { sh[s] = 0; });
+  return { shells: sh, mol: [], e: {}, nid: 0, pen: "d", ion: { cat: { br: false, ch: 0, co: 0 }, an: { br: false, ch: 0, co: 0 } } };
+}
+function narrow() { var s = $("stage"); return !!(s && s.clientWidth && s.clientWidth < 520); }
+function shellTarget(c, el) { return c.type === "ionic" && el === c.cat ? EL[el].c.length - 1 : EL[el].c.length; }
+function nucFill(c, el) { return c.els.indexOf(el) === 0 ? "#FCE883" : "#FFC0CB"; }
+
+/* positioned atoms for the fill / final drawing */
+function atomsOf(c) {
+  if (c.type === "ionic") {
+    var nc = D.shells[c.cat], na = D.shells[c.an], rc = rOut(nc), ra = rOut(na);
+    if (narrow()) return [{ id: "cat", el: c.cat, n: nc, x: 0, y: -(26 + rc), bonded: [] }, { id: "an", el: c.an, n: na, x: 0, y: 26 + ra, bonded: [] }];
+    return [{ id: "cat", el: c.cat, n: nc, x: -(70 + rc), y: 0, bonded: [] }, { id: "an", el: c.an, n: na, x: 70 + ra, y: 0, bonded: [] }];
+  }
+  var cen = D.mol.filter(function (m) { return !m.dir; })[0];
+  if (!cen) return [];
+  var rc2 = rOut(D.shells[cen.el]), out = [{ id: cen.id, el: cen.el, n: D.shells[cen.el], x: 0, y: 0, bonded: [] }];
+  D.mol.forEach(function (m) {
+    if (!m.dir) return;
+    var n = D.shells[m.el], d = rc2 + rOut(n) - OV, v = DIRS[m.dir];
+    out[0].bonded.push(m.dir);
+    out.push({ id: m.id, el: m.el, n: n, x: v[0] * d, y: v[1] * d, bonded: [OPP[m.dir]], dir: m.dir, d: d });
+  });
+  return out;
+}
+/* every tappable electron spot */
+function zonesOf(c) {
+  var atoms = atomsOf(c), zones = [], byId = {};
+  atoms.forEach(function (a) {
+    byId[a.id] = a;
+    for (var k = 1; k <= a.n; k++) {
+      var dirs = k === 1 ? ["N", "S"] : ORDER.slice();
+      if (k === a.n) dirs = dirs.filter(function (d) { return a.bonded.indexOf(d) < 0; });
+      dirs.forEach(function (d) {
+        var v = DIRS[d], r = R(k);
+        zones.push({ key: a.id + ":" + k + ":" + d, kind: "own", atom: a.id, shell: k, dir: d, cap: k === 1 ? 1 : 2, x: a.x + v[0] * r, y: a.y + v[1] * r, tx: -v[1], ty: v[0] });
+      });
+    }
+  });
+  if (c.type === "covalent" && atoms.length) {
+    var C = atoms[0], rc = rOut(C.n);
+    atoms.slice(1).forEach(function (b) {
+      var v = DIRS[b.dir], rb = rOut(b.n), d = b.d, x = (d * d + rc * rc - rb * rb) / (2 * d);
+      zones.push({ key: "ov:" + b.id, kind: "ov", atoms: [C.id, b.id], cap: 6, bo: bondOrder(C.el, b.el), x: v[0] * x, y: v[1] * x, tx: -v[1], ty: v[0] });
+    });
+  }
+  return { atoms: atoms, zones: zones, byId: byId };
+}
+function ePos(z, i, n) {
+  if (z.kind === "own") { if (n === 1) return [z.x, z.y]; var s = i ? 9 : -9; return [z.x + z.tx * s, z.y + z.ty * s]; }
+  var b = (i - (n - 1) / 2) * (n > 4 ? 12.5 : 15); return [z.x + z.tx * b, z.y + z.ty * b];
+}
+function glyph(s, x, y) {
+  x = +x.toFixed(1); y = +y.toFixed(1);
+  if (s === "d") return '<circle class="e-dot" cx="' + x + '" cy="' + y + '" r="6"/>';
+  return '<path class="e-x" d="M' + (x - 5.5) + " " + (y - 5.5) + "L" + (x + 5.5) + " " + (y + 5.5) + "M" + (x + 5.5) + " " + (y - 5.5) + "L" + (x - 5.5) + " " + (y + 5.5) + '"/>';
+}
+function atomSvg(c, a) {
+  var s = "";
+  for (var k = 1; k <= a.n; k++) s += '<circle class="sh" cx="' + a.x + '" cy="' + a.y + '" r="' + R(k) + '"/>';
+  return s;
+}
+function nucSvg(c, a) {
+  return '<circle class="nuc" cx="' + a.x + '" cy="' + a.y + '" r="' + NUC + '" fill="' + nucFill(c, a.el) + '"/><text class="nuc-t" x="' + a.x + '" y="' + a.y + '">' + a.el + "</text>";
+}
+function bbox(atoms, pad) {
+  var b = [Infinity, Infinity, -Infinity, -Infinity];
+  atoms.forEach(function (a) { var r = rOut(a.n); b[0] = Math.min(b[0], a.x - r); b[1] = Math.min(b[1], a.y - r); b[2] = Math.max(b[2], a.x + r); b[3] = Math.max(b[3], a.y + r); });
+  return [b[0] - pad, b[1] - pad, b[2] - b[0] + 2 * pad, b[3] - b[1] + 2 * pad];
+}
+
+/* kind: "shells" | "build" | "fill" | "final" */
+function render(c, kind, live) {
+  var s = "", vb;
+  if (kind === "shells") {
+    var x = 0, list = c.els.map(function (el) { var a = { id: el, el: el, n: D.shells[el], y: 0 }; a.x = x + rOut(a.n); x += 2 * rOut(a.n) + 40; return a; });
+    list.forEach(function (a) { a.x -= (x - 40) / 2; s += atomSvg(c, a); });
+    list.forEach(function (a) { s += nucSvg(c, a); });
+    vb = bbox(list, 16); vb[1] = Math.min(vb[1], -60); vb[3] = Math.max(vb[3], 120);
+    return { vb: vb, s: s };
+  }
+  if (kind === "build") return renderBuild(c);
+  var Z = zonesOf(c);
+  Z.atoms.forEach(function (a) { s += atomSvg(c, a); });
+  Z.atoms.forEach(function (a) { s += nucSvg(c, a); });
+  if (live) Z.zones.forEach(function (z) { if (!(D.e[z.key] || []).length) s += '<circle class="slot" cx="' + z.x + '" cy="' + z.y + '" r="' + (z.kind === "ov" ? 11 : 9) + '"/>'; });
+  Z.zones.forEach(function (z) {
+    var arr = D.e[z.key] || [];
+    if (z.kind === "ov") { // show shared electrons as ●✕ pairs
+      var ds = arr.filter(function (x) { return x === "d"; }), xs = arr.filter(function (x) { return x === "x"; }), mix = [];
+      while (ds.length || xs.length) { if (ds.length) mix.push(ds.pop()); if (xs.length) mix.push(xs.pop()); }
+      arr = mix;
+    }
+    arr.forEach(function (sym, i) { var p = ePos(z, i, arr.length); s += glyph(sym, p[0], p[1]); });
+  });
+  vb = bbox(Z.atoms, 14);
+  if (c.type === "ionic") {
+    vb[0] -= 64; vb[2] += 64 + 56; vb[1] -= 34; vb[3] += 34;
+    if (kind === "final") Z.atoms.forEach(function (a) {
+      var io = D.ion[a.id], r = rOut(a.n) + 14, x0 = a.x - r, x1 = a.x + r, y0 = a.y - r, y1 = a.y + r;
+      if (io.br) s += '<path class="brk" d="M' + (x0 + 14) + " " + y0 + "H" + x0 + "V" + y1 + "H" + (x0 + 14) + "M" + (x1 - 14) + " " + y0 + "H" + x1 + "V" + y1 + "H" + (x1 - 14) + '"/>';
+      if (io.ch) s += '<text class="chg" x="' + (x1 + 6) + '" y="' + (y0 + 14) + '">' + chStr(io.ch) + "</text>";
+      if (io.co > 1) s += '<text class="coef" x="' + (x0 - 8) + '" y="' + a.y + '">' + io.co + "</text>";
+    });
+  }
+  return { vb: vb, s: s };
+}
+function buildExtent(c) {
+  var E = 0; c.els.forEach(function (a) { c.els.forEach(function (b) { E = Math.max(E, rOut(D.shells[a]) + 2 * rOut(D.shells[b]) - OV); }); });
+  return E;
+}
+function renderBuild(c) {
+  var s = "", E = buildExtent(c), atoms = atomsOf(c), sc = .5, rmax = 0;
+  c.els.forEach(function (el) { rmax = Math.max(rmax, rOut(D.shells[el])); });
+  s += '<rect class="bzone" x="' + (-E - 10) + '" y="' + (-E - 10) + '" width="' + (2 * E + 20) + '" height="' + (2 * E + 20) + '" rx="26"/>';
+  if (!atoms.length) {
+    var rr = B.drag ? rOut(D.shells[B.drag.el]) : 60;
+    s += '<circle class="cslot' + (B.target === "C" ? " on" : "") + '" cx="0" cy="0" r="' + rr + '"/><text class="cslot-t" x="0" y="' + (rr + 24) + '">Drag the centre atom here</text>';
+  } else {
+    var cen = atoms[0], rc = rOut(cen.n), other = c.els.filter(function (e) { return e !== cen.el; })[0] || cen.el;
+    var rr2 = rOut(D.shells[B.drag ? B.drag.el : other]);
+    ORDER.forEach(function (d) {
+      if (cen.bonded.indexOf(d) >= 0) return;
+      var v = DIRS[d], dd = rc + rr2 - OV;
+      s += '<circle class="cslot' + (B.target === d ? " on" : "") + '" cx="' + v[0] * dd + '" cy="' + v[1] * dd + '" r="' + rr2 + '"/>';
+    });
+    atoms.forEach(function (a) { s += atomSvg(c, a); });
+    atoms.forEach(function (a) { s += nucSvg(c, a); });
+  }
+  // tray of atoms to copy
+  var ty = E + 10 + 22 + 30 + rmax * sc, widths = c.els.map(function (el) { return 2 * rOut(D.shells[el]) * sc; }), total = widths.reduce(function (p, w) { return p + w + 40; }, -40), x = -total / 2;
+  s += '<rect class="tray-bg" x="' + (-E - 10) + '" y="' + (E + 22) + '" width="' + (2 * E + 20) + '" height="' + (rmax * 2 * sc + 62) + '" rx="20"/>';
+  s += '<text class="tray-t" x="0" y="' + (E + 44) + '">HOLD &amp; DRAG TO COPY</text>';
+  B.tray = [];
+  c.els.forEach(function (el, i) {
+    var r = widths[i] / 2, cx = x + r; x += widths[i] + 40;
+    B.tray.push({ el: el, x: cx, y: ty, r: Math.max(r, 30) });
+    s += '<g transform="translate(' + cx + " " + ty + ") scale(" + sc + ')">' + atomSvg(c, { x: 0, y: 0, n: D.shells[el], el: el }) + nucSvg(c, { x: 0, y: 0, n: D.shells[el], el: el }) + "</g>";
+  });
+  if (B.drag) s += '<g opacity=".8" transform="translate(' + B.drag.x + " " + B.drag.y + ')">' + atomSvg(c, { x: 0, y: 0, n: D.shells[B.drag.el], el: B.drag.el }) + nucSvg(c, { x: 0, y: 0, n: D.shells[B.drag.el], el: B.drag.el }) + "</g>";
+  return { vb: [-E - 14, -E - 14, 2 * E + 28, 2 * E + 28 + rmax * 2 * sc + 76], s: s };
+}
+function svgString(c, kind) {
+  var r = render(c, kind, false);
+  return '<div class="draw"><svg xmlns="http://www.w3.org/2000/svg" viewBox="' + r.vb.map(function (v) { return +v.toFixed(1); }).join(" ") + '" role="img" aria-label="Dot-and-cross diagram">' + r.s + "</svg></div>";
+}
+function paintSvg() {
+  var svg = $("svg"); if (!svg) return;
+  var kind = svg.getAttribute("data-kind"), r = render(G.c, kind, kind !== "final");
+  svg.setAttribute("viewBox", r.vb.map(function (v) { return +v.toFixed(1); }).join(" "));
+  svg.innerHTML = r.s;
+}
+function liveSvg(kind) { return '<div class="draw' + (kind === "build" ? " build" : "") + '"><svg id="svg" data-kind="' + kind + '" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Drawing area"></svg></div>'; }
+function pt(svg, e) { var m = svg.getScreenCTM(); if (!m) return { x: 0, y: 0 }; var P = svg.createSVGPoint(); P.x = e.clientX; P.y = e.clientY; P = P.matrixTransform(m.inverse()); return { x: P.x, y: P.y }; }
+
+/* ---- electron counting ---- */
+function shellCount(id, k, Z) { var t = 0; Z.zones.forEach(function (z) { if (z.kind === "own" && z.atom === id && z.shell === k) t += (D.e[z.key] || []).length; }); return t; }
+function outerTotal(a, Z) { var t = shellCount(a.id, a.n, Z); Z.zones.forEach(function (z) { if (z.kind === "ov" && z.atoms.indexOf(a.id) > -1) t += (D.e[z.key] || []).length; }); return t; }
+function ownSyms(id, Z, maxShell) { var out = []; Z.zones.forEach(function (z) { if (z.kind === "own" && z.atom === id && (!maxShell || z.shell <= maxShell)) out = out.concat(D.e[z.key] || []); }); return out; }
+function uniform(a) { return a.every(function (x) { return x === a[0]; }); }
+function countOf(a, s) { return a.filter(function (x) { return x === s; }).length; }
+
+/* ---- live rules while placing electrons ---- */
+function tapZone(z, Z) {
+  var arr = D.e[z.key] || (D.e[z.key] = []);
+  if (D.pen === "er") { if (arr.length) { arr.pop(); Sound.tap(); } return; }
+  if (arr.length >= z.cap) { toast(z.kind === "ov" ? "This overlap is full." : "That spot is full. Use the eraser to remove an electron."); return; }
+  var ids = z.kind === "own" ? [z.atom] : z.atoms;
+  for (var i = 0; i < ids.length; i++) {
+    var a = Z.byId[ids[i]], upto = z.kind === "own" ? z.shell - 1 : a.n - 1;
+    for (var j = 1; j <= upto; j++) if (shellCount(a.id, j, Z) < (j === 1 ? 2 : 8)) { slip("innerFirst"); return; }
+  }
+  if (z.kind === "own" && arr.length === 1) {
+    var a2 = Z.byId[z.atom], sharedShell = G.c.type === "covalent" && z.shell === a2.n && a2.bonded.length;
+    var gap = Z.zones.some(function (y) { return y.kind === "own" && y.atom === z.atom && y.shell === z.shell && y !== z && !(D.e[y.key] || []).length; });
+    if (!sharedShell && gap) { slip("singlyFirst"); return; }
+  }
+  arr.push(D.pen); Sound.pop();
+}
+function fillInner(a, Z) {
+  var upto = G.c.type === "ionic" && a.id === "cat" ? a.n : a.n - 1;
+  Z.zones.forEach(function (z) { if (z.kind === "own" && z.atom === a.id && (D.pen === "er" || z.shell <= upto)) D.e[z.key] = D.pen === "er" ? [] : Array(z.cap).fill(D.pen); });
+  Sound.pop();
+}
+function slip(k) {
+  Sound.no(); toast("✋ " + ERR[k].tip, true); G.slip = true;
+  if (G.slipKeys.indexOf(k) < 0) { G.slipKeys.push(k); G.rec.errs.push(k); G.rec.given.push(STEP[curStep()].label + ": " + ERR[k].label); }
+}
+
+/* ---- checking a finished drawing ---- */
+function fillCheck(c) {
+  var Z = zonesOf(c), i, a, k;
+  if (c.type === "ionic") {
+    var A = Z.byId.cat, Bn = Z.byId.an, ionCfg = EL[c.cat].c.slice(0, -1);
+    for (k = 1; k <= A.n; k++) if (shellCount("cat", k, Z) !== ionCfg[k - 1]) return "cationE";
+    var sa = ownSyms("cat", Z); if (!uniform(sa)) return "symbolMix";
+    for (k = 1; k < Bn.n; k++) if (shellCount("an", k, Z) !== EL[c.an].c[k - 1]) return "shellCount";
+    if (shellCount("an", Bn.n, Z) !== 8) return "outerCount";
+    var inner = ownSyms("an", Z, Bn.n - 1); if (!uniform(inner)) return "symbolMix";
+    if (inner[0] === sa[0]) return "sameSymbol";
+    var out = []; Z.zones.forEach(function (z) { if (z.kind === "own" && z.atom === "an" && z.shell === Bn.n) out = out.concat(D.e[z.key] || []); });
+    if (countOf(out, inner[0]) !== outer(c.an) || countOf(out, sa[0]) !== needs(c.an)) return "transferred";
+    return null;
+  }
+  for (i = 0; i < Z.atoms.length; i++) { a = Z.atoms[i]; for (k = 1; k < a.n; k++) if (shellCount(a.id, k, Z) !== EL[a.el].c[k - 1]) return "shellCount"; }
+  for (i = 0; i < Z.atoms.length; i++) if (!uniform(ownSyms(Z.atoms[i].id, Z))) return "symbolMix";
+  var ovs = Z.zones.filter(function (z) { return z.kind === "ov"; });
+  for (i = 0; i < ovs.length; i++) { var e = D.e[ovs[i].key] || []; if (e.length !== 2 * ovs[i].bo || countOf(e, "d") !== ovs[i].bo) return "bondPair"; }
+  for (i = 0; i < Z.atoms.length; i++) if (outerTotal(Z.atoms[i], Z) !== (Z.atoms[i].el === "H" ? 2 : 8)) return "outerCount";
+  var odd = Z.zones.some(function (z) { var at = Z.byId[z.atom]; return z.kind === "own" && z.shell === at.n && (D.e[z.key] || []).length % 2; });
+  if (odd) return "lonePair";
+  for (i = 0; i < ovs.length; i++) { var s1 = ownSyms(ovs[i].atoms[0], Z)[0], s2 = ownSyms(ovs[i].atoms[1], Z)[0]; if (s1 && s2 && s1 === s2) return "sameSymbol"; }
+  return null;
+}
+/* ---- the model answer ---- */
+function correctMol(c) {
+  var cen = c.central || (c.els.length === 1 ? c.els[0] : c.els.filter(function (x) { return x !== "H"; })[0]);
+  var mol = [{ id: "m1", el: cen, dir: null }], n = 1, dirs = ["E", "W", "S", "N"], di = 0;
+  c.els.forEach(function (el) { var cnt = c.counts[el] - (el === cen ? 1 : 0); for (var i = 0; i < cnt; i++) mol.push({ id: "m" + (++n), el: el, dir: dirs[di++] }); });
+  return mol;
+}
+function correctE(c) {
+  var Z = zonesOf(c), e = {};
+  function own(id, k) { return Z.zones.filter(function (z) { return z.kind === "own" && z.atom === id && z.shell === k; }).sort(function (p, q) { return ORDER.indexOf(p.dir) - ORDER.indexOf(q.dir); }); }
+  function place(zs, syms) { var seq = zs.concat(zs.filter(function (z) { return z.cap > 1; })); syms.forEach(function (s, i) { (e[seq[i].key] = e[seq[i].key] || []).push(s); }); }
+  function rep(s, n) { return Array(n).fill(s); }
+  if (c.type === "ionic") {
+    var A = Z.byId.cat, Bn = Z.byId.an, k;
+    for (k = 1; k <= A.n; k++) place(own("cat", k), rep("d", EL[c.cat].c[k - 1]));
+    for (k = 1; k < Bn.n; k++) place(own("an", k), rep("x", EL[c.an].c[k - 1]));
+    place(own("an", Bn.n), rep("x", outer(c.an)).concat(rep("d", needs(c.an))));
+    return e;
+  }
+  var sym = {}, cen = Z.atoms[0];
+  Z.atoms.forEach(function (a, i) { sym[a.id] = i === 0 ? (Z.atoms.length > 1 && Z.atoms[1].el === cen.el ? "d" : "x") : (a.el === cen.el ? "x" : "d"); });
+  Z.atoms.forEach(function (a) { for (var k = 1; k < a.n; k++) place(own(a.id, k), rep(sym[a.id], EL[a.el].c[k - 1])); });
+  Z.zones.forEach(function (z) { if (z.kind !== "ov") return; e[z.key] = []; for (var i = 0; i < z.bo; i++) e[z.key].push(sym[z.atoms[0]], sym[z.atoms[1]]); });
+  Z.atoms.forEach(function (a) {
+    var used = 0; Z.zones.forEach(function (z) { if (z.kind === "ov" && z.atoms.indexOf(a.id) > -1) used += z.bo; });
+    var lone = (outer(a.el) - used) / 2, zs = own(a.id, a.n);
+    for (var i = 0; i < lone; i++) e[zs[i].key] = [sym[a.id], sym[a.id]];
+  });
+  return e;
+}
+
+/* =================== STEPS =================== */
+function pick(g) { var b = document.querySelector('[data-g="' + g + '"][aria-pressed="true"]'); return b ? b.dataset.v : null; }
+function pressGroup(sel, after) {
+  Array.prototype.forEach.call(document.querySelectorAll(sel), function (b) {
+    b.addEventListener("click", function () {
+      if (G.busy) return; Sound.tap();
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      if (after) after(b);
+    });
+  });
+}
+function rowCls(i) { return "el-row" + (i % 2 ? " p2" : ""); }
+function typeWhy(c) {
+  if (c.type === "ionic") return cap(EL[c.cat].n) + " is a metal and " + EL[c.an].n + " is a non-metal, so electrons are <b>transferred</b> from " + EL[c.cat].n + " to " + EL[c.an].n + ".";
+  return (c.els.length === 1 ? "Both atoms are " + EL[c.els[0]].n + ", a non-metal" : c.els.map(function (s) { return cap(EL[s].n); }).join(" and ") + " are both non-metals") + ", so electrons are <b>shared</b>.";
+}
+function want(c) { return c.type === "ionic" ? [["lose", outer(c.cat)], ["gain", needs(c.an)]] : c.els.map(function (s) { return ["share", needs(s)]; }); }
+function ionName(c, which) { return which === "cat" ? ionHtml(c.cat, c.ca) : ionHtml(c.an, -c.cb); }
+
+var STEP = {
+  type: {
+    label: "Bond type", short: "Type",
+    title: function () { return "What type of bonding?"; },
+    body: function () {
+      return '<div class="bonds"><button class="bond" type="button" aria-pressed="false" data-g="bt" data-v="ionic"><img src="' + IMG.ionic + '" alt=""><span>Ionic</span></button>' +
+        '<button class="bond" type="button" aria-pressed="false" data-g="bt" data-v="covalent"><img src="' + IMG.covalent + '" alt=""><span>Covalent</span></button></div>';
+    },
+    wire: function () { pressGroup('[data-g="bt"]'); },
+    read: function () { return pick("bt"); },
+    check: function (c, v) { return v === c.type ? null : "bondType"; },
+    answer: function (c) { return "It's <b>" + c.type + "</b> bonding. " + typeWhy(c); },
+    why: typeWhy,
+    note: function (c) { return "<b>Bonding:</b> " + c.type; },
+    hint: function (c) { return "Is there a metal? " + c.els.map(function (s) { return cap(EL[s].n) + " is a " + (EL[s].m ? "metal" : "non-metal"); }).join("; ") + "."; }
+  },
+  config: {
+    label: "Electronic config", short: "Config",
+    title: function () { return "Electronic configurations<small>Type the number of electrons in each shell.</small>"; },
+    body: function (c) {
+      return c.els.map(function (s, i) {
+        return '<div class="' + rowCls(i) + '"><div class="el-head"><span class="sym">' + s + "</span><small>" + EL[s].n + "</small></div>" +
+          '<div class="shells">' + EL[s].c.map(function (x, j) { return (j ? "<span>.</span>" : "") + '<input data-e="' + i + '" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="' + s + " shell " + (j + 1) + '">'; }).join("") + "</div></div>";
+      }).join("");
+    },
+    wire: function () {
+      var ins = document.querySelectorAll(".shells input");
+      Array.prototype.forEach.call(ins, function (inp, k) {
+        inp.addEventListener("input", function () { inp.value = inp.value.replace(/\D/g, "").slice(-1); if (inp.value && ins[k + 1]) ins[k + 1].focus(); });
+        inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); submitStep(); } });
+      });
+      if (window.matchMedia("(pointer: fine)").matches && ins[0]) ins[0].focus();
+    },
+    read: function (c) {
+      var v = c.els.map(function () { return []; }), empty = false;
+      Array.prototype.forEach.call(document.querySelectorAll(".shells input"), function (inp) { if (inp.value === "") empty = true; v[+inp.dataset.e].push(+inp.value); });
+      return empty ? null : v;
+    },
+    check: function (c, v) { return c.els.every(function (s, i) { return v[i].join(".") === cfg(s); }) ? null : "config"; },
+    give: function (v) { return v.map(function (x) { return x.join("."); }).join(" / "); },
+    answer: function (c) { return c.els.map(function (s) { return "<b>" + s + "</b> (" + EL[s].z + " electrons): " + cfg(s); }).join("<br>"); },
+    why: function (c) { return c.els.map(function (s) { return s + " has " + EL[s].z + " electrons → <b>" + cfg(s) + "</b>"; }).join("; ") + ". The last number is the outer (valence) electrons."; },
+    note: function (c) { return "<b>Configs:</b> " + c.els.map(function (s) { return s + " " + cfg(s); }).join(" · "); },
+    hint: function (c) { return "Atomic numbers: " + c.els.map(function (s) { return s + " = " + EL[s].z; }).join(", ") + ". Shells hold 2, then 8, then 8."; }
+  },
+  change: {
+    label: "Lose / gain / share", short: "Electrons",
+    title: function (c) { return "How does each atom get a full outer shell?"; },
+    body: function (c) {
+      return c.els.map(function (s, i) {
+        return '<div class="' + rowCls(i) + '"><div class="el-head"><span class="sym">' + s + "</span><small>" + cfg(s) + '</small></div><div class="seg">' +
+          ["lose", "gain", "share"].map(function (a) { return '<button class="tap" type="button" aria-pressed="false" data-g="act' + i + '" data-v="' + a + '">' + cap(a) + "s</button>"; }).join("") +
+          '</div><div class="seg"><span class="lbl">electrons:</span>' +
+          [1, 2, 3, 4].map(function (n) { return '<button class="tap num" type="button" aria-pressed="false" data-g="num' + i + '" data-v="' + n + '">' + n + "</button>"; }).join("") + "</div></div>";
+      }).join("");
+    },
+    wire: function (c) { c.els.forEach(function (s, i) { pressGroup('[data-g="act' + i + '"]'); pressGroup('[data-g="num' + i + '"]'); }); },
+    read: function (c) { var v = c.els.map(function (s, i) { var a = pick("act" + i), n = pick("num" + i); return a && n ? [a, +n] : null; }); return v.indexOf(null) > -1 ? null : v; },
+    check: function (c, v) {
+      var w = want(c), acts = v.map(function (x) { return x[0]; });
+      if (c.type === "ionic") { if (acts.indexOf("share") > -1) return "ionicShare"; if (acts[0] !== "lose" || acts[1] !== "gain") return "loseGain"; }
+      else if (acts.some(function (a) { return a !== "share"; })) return "covShare";
+      return v.every(function (x, i) { return x[1] === w[i][1]; }) ? null : "eCount";
+    },
+    give: function (v) { return v.map(function (x) { return x[0] + "s " + x[1]; }).join(" / "); },
+    answer: function (c) { var w = want(c); return c.els.map(function (s, i) { return "<b>" + s + "</b> " + w[i][0] + "s " + plural(w[i][1], "electron"); }).join("<br>"); },
+    why: function (c) {
+      if (c.type === "ionic") return c.cat + " (" + cfg(c.cat) + ") loses its " + plural(outer(c.cat), "outer electron") + " to form " + ionName(c, "cat") + ". " + c.an + " (" + cfg(c.an) + ") gains " + plural(needs(c.an), "electron") + " to make 8, forming " + ionName(c, "an") + ".";
+      return c.els.map(function (s) { return s + " has " + outer(s) + " outer electron" + (outer(s) > 1 ? "s" : "") + ", so it shares " + needs(s) + " to reach " + (s === "H" ? "2" : "8"); }).join("; ") + ".";
+    },
+    note: function (c) { var w = want(c); return "<b>Electrons:</b> " + c.els.map(function (s, i) { return s + " " + w[i][0] + "s " + w[i][1]; }).join(", "); },
+    hint: function (c) {
+      return c.type === "ionic" ? c.cat + " has " + plural(outer(c.cat), "outer electron") + ": easier to lose them. " + c.an + " has " + outer(c.an) + ": it needs " + needs(c.an) + " more to make 8."
+        : "Each atom shares to reach 8 outer electrons (hydrogen: 2). " + c.els.map(function (s) { return s + " has " + outer(s); }).join(", ") + " outer electrons.";
+    }
+  },
+  shells: {
+    label: "Drawing shells", short: "Shells", draws: true,
+    title: function (c) { return "Draw the empty shells of each " + (c.type === "ionic" ? "ion" : "atom"); },
+    howto: function (c) { return "Tap <b>+</b> to add a shell and <b>−</b> to remove one." + (c.type === "ionic" ? " Think about the shells each particle has <b>after</b> the electrons move." : ""); },
+    body: function (c) {
+      return liveSvg("shells") + '<div class="shell-ctl">' + c.els.map(function (el, i) {
+        return '<div class="' + rowCls(i) + '"><span class="el-head"><span class="sym">' + el + '</span></span><button class="tap" type="button" data-sh="' + el + '" data-d="-1" aria-label="Remove a shell from ' + el + '">−</button><b id="shn-' + el + '">0 shells</b><button class="tap" type="button" data-sh="' + el + '" data-d="1" aria-label="Add a shell to ' + el + '">+</button></div>';
+      }).join("") + "</div>";
+    },
+    wire: function (c) {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-sh]"), function (b) {
+        b.addEventListener("click", function () {
+          if (G.busy) return; var el = b.dataset.sh; D.shells[el] = Math.max(0, Math.min(4, D.shells[el] + (+b.dataset.d))); Sound.tap();
+          $("shn-" + el).textContent = plural(D.shells[el], "shell"); paintSvg();
+        });
+      });
+      paintSvg();
+    },
+    read: function (c) { return c.els.some(function (el) { return !D.shells[el]; }) ? null : c.els.map(function (el) { return D.shells[el]; }); },
+    check: function (c) {
+      for (var i = 0; i < c.els.length; i++) { var el = c.els[i]; if (D.shells[el] !== shellTarget(c, el)) return c.type === "ionic" && el === c.cat && D.shells[el] === EL[el].c.length ? "shellsCation" : "shells"; }
+      return null;
+    },
+    give: function (v, c) { return c.els.map(function (el, i) { return el + " " + v[i]; }).join(", ") + " shells"; },
+    apply: function (c) { c.els.forEach(function (el) { D.shells[el] = shellTarget(c, el); }); },
+    answer: function (c) { this.apply(c); return this.why(c) + svgString(c, "shells"); },
+    why: function (c) {
+      if (c.type === "ionic") return ionName(c, "cat") + " has lost its outer shell, so it keeps <b>" + plural(shellTarget(c, c.cat), "shell") + "</b> (" + EL[c.cat].c.slice(0, -1).join(".") + "). " +
+        c.an + " keeps <b>" + plural(shellTarget(c, c.an), "shell") + "</b>; its outer shell fills up to 8.";
+      return c.els.map(function (el) { return el + " " + cfg(el) + " → <b>" + plural(shellTarget(c, el), "shell") + "</b>"; }).join("; ") + ".";
+    },
+    note: function (c) { return "<b>Shells:</b> " + c.els.map(function (el) { return el + " " + shellTarget(c, el); }).join(", "); },
+    hint: function (c) { return c.type === "ionic" ? "Count the numbers in each configuration. The metal loses all its outer electrons, so its outer shell disappears." : "One shell for each number in the configuration, e.g. " + c.els[0] + " " + cfg(c.els[0]) + " → " + plural(EL[c.els[0]].c.length, "shell") + "."; }
+  },
+  build: {
+    label: "Building molecules", short: "Build", draws: true,
+    title: function () { return "Build the molecule<small>Overlap the outer shells of atoms that share electrons.</small>"; },
+    howto: function (c) { return "<b>Hold and drag</b> an atom from the yellow tray to make a copy. Drop the first one in the <b>centre</b>, then drop copies onto the dashed circles so their outer shells overlap. Drag an atom out to remove it."; },
+    body: function () { return liveSvg("build") + '<div class="tools"><button class="btn small alt" id="btn-reset" type="button">↺ Start again</button></div>'; },
+    wire: function (c) {
+      var svg = $("svg"); B = { drag: null, target: null, tray: [] };
+      svg.addEventListener("pointerdown", function (e) {
+        if (G.busy) return;
+        var p = pt(svg, e), hit = null, i, atoms = atomsOf(c);
+        for (i = 0; i < B.tray.length; i++) if (Math.hypot(p.x - B.tray[i].x, p.y - B.tray[i].y) < B.tray[i].r + 8) hit = { el: B.tray[i].el, from: "tray" };
+        if (!hit) for (i = atoms.length - 1; i >= 0; i--) if (Math.hypot(p.x - atoms[i].x, p.y - atoms[i].y) < NUC + 18) {
+          if (i === 0 && atoms.length > 1) { toast("Move the outer atoms away first."); return; }
+          hit = { el: atoms[i].el, from: "mol", id: atoms[i].id }; break;
+        }
+        if (!hit) return;
+        e.preventDefault();
+        if (hit.from === "mol") D.mol = D.mol.filter(function (m) { return m.id !== hit.id; });
+        B.drag = { el: hit.el, from: hit.from, x: p.x, y: p.y, x0: p.x, y0: p.y, moved: false };
+        try { svg.setPointerCapture(e.pointerId); } catch (err) {}
+        B.target = findSlot(c, hit.el, p); Sound.tap(); paintSvg();
+      });
+      svg.addEventListener("pointermove", function (e) {
+        if (!B.drag) return; var p = pt(svg, e);
+        B.drag.x = p.x; B.drag.y = p.y; if (Math.hypot(p.x - B.drag.x0, p.y - B.drag.y0) > 10) B.drag.moved = true;
+        B.target = findSlot(c, B.drag.el, p); paintSvg();
+      });
+      function end() {
+        if (!B.drag) return; var d = B.drag, t = B.target; B.drag = null; B.target = null;
+        if (t) { D.mol.push({ id: "m" + (++D.nid + 10), el: d.el, dir: t === "C" ? null : t }); Sound.pop(); }
+        else if (d.from === "tray" && !d.moved) toast("Hold and drag the copy onto the drawing.");
+        paintSvg();
+      }
+      svg.addEventListener("pointerup", end);
+      svg.addEventListener("pointercancel", function () { B.drag = null; B.target = null; paintSvg(); });
+      $("btn-reset").addEventListener("click", function () { if (G.busy) return; D.mol = []; Sound.tap(); paintSvg(); });
+      paintSvg();
+    },
+    read: function () { return D.mol.length ? D.mol.slice() : null; },
+    check: function (c) {
+      var cen = D.mol.filter(function (m) { return !m.dir; })[0], cnt = {};
+      D.mol.forEach(function (m) { cnt[m.el] = (cnt[m.el] || 0) + 1; });
+      var countsOk = c.els.every(function (el) { return cnt[el] === c.counts[el]; }) && Object.keys(cnt).length === c.els.length;
+      if (!cen) return "atomCount";
+      if (c.central && cen.el !== c.central && countsOk) return "central";
+      if (!countsOk) return "atomCount";
+      if (c.central && cen.el !== c.central) return "central";
+      return null;
+    },
+    give: function (v) { var cen = v.filter(function (m) { return !m.dir; })[0]; return (cen ? cen.el + " centre + " : "") + v.filter(function (m) { return m.dir; }).map(function (m) { return m.el; }).join(", "); },
+    apply: function (c) { D.mol = correctMol(c); D.nid = D.mol.length; },
+    answer: function (c) { this.apply(c); return this.why(c) + svgString(c, "fill"); },
+    why: function (c) {
+      if (!c.central) return "Two atoms: put one in the centre and overlap a copy of " + (c.els.length === 1 ? "it" : "the other") + " beside it.";
+      var o = c.els.filter(function (e) { return e !== c.central; })[0];
+      return c.central + " needs to share " + needs(c.central) + " electrons and each " + o + " shares " + needs(o) + ", so <b>" + c.central + "</b> goes in the centre with <b>" + c.counts[o] + " " + o + "</b> atoms overlapping it.";
+    },
+    note: function (c) { return "<b>Molecule:</b> " + fx(c.formula) + (c.central ? ", " + c.central + " in the centre" : ""); },
+    hint: function (c) { return c.central ? "Put the atom that needs the most electrons in the centre. Then copy the other atom as many times as the formula " + fx(c.formula) + " says." : "Drag one atom to the centre, then drag a copy of the other atom next to it."; }
+  },
+  fill: {
+    label: "Placing electrons", short: "Dots & crosses", draws: true,
+    title: function (c) { return "Fill in the electrons<small>Use ● for one " + (c.type === "ionic" ? "ion's" : "atom's") + " electrons and ✕ for the other's.</small>"; },
+    howto: function (c) {
+      return "Pick <b>● or ✕</b>, then tap a dashed spot. Fill the <b>1st shell (2)</b> before the next shells (8). Add electrons <b>singly</b> at top, right, bottom and left before pairing." +
+        (c.type === "ionic" ? " Draw the electrons the non-metal gained with the <b>metal's</b> symbol." : " Shared pairs go in the <b>overlap</b>; leftover outer electrons go in <b>pairs</b>.");
+    },
+    body: function () {
+      return '<div class="tools"><span class="lbl">Pen</span><button class="pen" type="button" data-pen="d" aria-pressed="true">● Dot</button><button class="pen" type="button" data-pen="x" aria-pressed="false">✕ Cross</button>' +
+        '<button class="pen" type="button" data-pen="er" aria-pressed="false">⌫ Eraser</button><button class="btn small alt" id="btn-clear" type="button">Clear all</button></div>' + liveSvg("fill") +
+        (G.mode === "challenge" ? '<p class="lbl" style="margin:0">Shortcut: tap a nucleus to fill its inner shells with your pen.</p>' : "");
+    },
+    wire: function (c) {
+      D.pen = "d";
+      Array.prototype.forEach.call(document.querySelectorAll(".pen"), function (b) {
+        b.addEventListener("click", function () { D.pen = b.dataset.pen; Sound.tap(); Array.prototype.forEach.call(document.querySelectorAll(".pen"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); });
+      });
+      $("btn-clear").addEventListener("click", function () { if (G.busy) return; D.e = {}; Sound.tap(); paintSvg(); });
+      var svg = $("svg");
+      svg.addEventListener("click", function (e) {
+        if (G.busy) return;
+        var p = pt(svg, e), Z = zonesOf(c), best = null, bd = 26;
+        Z.zones.forEach(function (z) {
+          var dx = p.x - z.x, dy = p.y - z.y, d;
+          if (z.kind === "ov") { var al = dx * z.tx + dy * z.ty, cl = Math.max(-38, Math.min(38, al)); d = Math.hypot(dx - z.tx * cl, dy - z.ty * cl); }
+          else d = Math.hypot(dx, dy);
+          if (d < bd) { bd = d; best = z; }
+        });
+        if (best) tapZone(best, Z);
+        else if (G.mode === "challenge") { var a = Z.atoms.filter(function (at) { return Math.hypot(p.x - at.x, p.y - at.y) < NUC + 4; })[0]; if (a) fillInner(a, Z); }
+        paintSvg();
+      });
+      paintSvg();
+    },
+    read: function () { return Object.keys(D.e).some(function (k) { return D.e[k].length; }) ? true : null; },
+    check: function (c) { return fillCheck(c); },
+    give: function () { return "drawing"; },
+    apply: function (c) { D.e = correctE(c); },
+    answer: function (c) { this.apply(c); return this.why(c) + svgString(c, "fill"); },
+    why: function (c) {
+      if (c.type === "ionic") return ionName(c, "cat") + " keeps full inner shells (" + EL[c.cat].c.slice(0, -1).join(".") + "), all in one symbol. " + ionName(c, "an") + " has " + outer(c.an) + " of its own outer electrons + " + needs(c.an) + " gained from " + c.cat + " (drawn in " + c.cat + "'s symbol) = 8.";
+      var Z = zonesOf(c), parts = [];
+      Z.zones.forEach(function (z) { if (z.kind === "ov") { var a = Z.byId[z.atoms[0]].el, b = Z.byId[z.atoms[1]].el, t = a + "–" + b + ": " + plural(z.bo, "shared pair"); if (parts.indexOf(t) < 0) parts.push(t); } });
+      return parts.join("; ") + ". Every outer shell now has 8 electrons" + (c.els.indexOf("H") > -1 ? " (H has 2)" : "") + "; leftover outer electrons sit in lone pairs.";
+    },
+    note: function (c) { return "<b>Diagram:</b> dots &amp; crosses ✓"; },
+    hint: function (c) { return c.type === "ionic" ? "Metal ion: only full inner shells, all one symbol. Non-metal ion: its own electrons in one symbol + the gained electrons in the metal's symbol, 8 in the outer shell." : "Each overlap gets one ● and one ✕ per shared pair. Then pair up each atom's leftover outer electrons."; }
+  },
+  charges: {
+    label: "Brackets & charges", short: "Charges", draws: true,
+    title: function () { return "Add the brackets, charges and numbers"; },
+    howto: function () { return "Put each ion in <b>[ ]</b>, give it its <b>charge</b>, and choose the <b>number</b> of each ion so the charges balance."; },
+    body: function (c) {
+      return liveSvg("final") + '<div class="ion-ctl">' + ["cat", "an"].map(function (w, i) {
+        var el = w === "cat" ? c.cat : c.an;
+        return '<div class="' + rowCls(i) + '"><div class="el-head"><span class="sym">' + el + '</span><small>' + (w === "cat" ? "metal ion" : "non-metal ion") + "</small></div>" +
+          '<div class="seg"><button class="tap" type="button" data-br="' + w + '" aria-pressed="false">[ ] Brackets</button></div>' +
+          '<div class="seg"><span class="lbl">charge</span>' + [1, 2, 3, -1, -2, -3].map(function (ch) { return '<button class="tap" type="button" aria-pressed="false" data-g="ch-' + w + '" data-v="' + ch + '">' + chStr(ch) + "</button>"; }).join("") + "</div>" +
+          '<div class="seg"><span class="lbl">number</span>' + [1, 2, 3].map(function (n) { return '<button class="tap num" type="button" aria-pressed="false" data-g="co-' + w + '" data-v="' + n + '">' + n + "</button>"; }).join("") + "</div></div>";
+      }).join("") + "</div>";
+    },
+    wire: function () {
+      ["cat", "an"].forEach(function (w) {
+        var br = document.querySelector('[data-br="' + w + '"]');
+        br.addEventListener("click", function () { if (G.busy) return; D.ion[w].br = !D.ion[w].br; br.setAttribute("aria-pressed", D.ion[w].br); Sound.tap(); paintSvg(); });
+        pressGroup('[data-g="ch-' + w + '"]', function (b) { D.ion[w].ch = +b.dataset.v; paintSvg(); });
+        pressGroup('[data-g="co-' + w + '"]', function (b) { D.ion[w].co = +b.dataset.v; paintSvg(); });
+      });
+      paintSvg();
+    },
+    read: function () { return D.ion.cat.ch && D.ion.an.ch && D.ion.cat.co && D.ion.an.co ? JSON.parse(JSON.stringify(D.ion)) : null; },
+    check: function (c) {
+      if (!D.ion.cat.br || !D.ion.an.br) return "brackets";
+      if (D.ion.cat.ch !== c.ca || D.ion.an.ch !== -c.cb) return "charge";
+      if (D.ion.cat.co !== c.na || D.ion.an.co !== c.nb) return "coef";
+      return null;
+    },
+    give: function (v, c) { return (v.cat.co > 1 ? v.cat.co : "") + (v.cat.br ? "[" + c.cat + "]" : c.cat) + chStr(v.cat.ch) + " " + (v.an.co > 1 ? v.an.co : "") + (v.an.br ? "[" + c.an + "]" : c.an) + chStr(v.an.ch); },
+    apply: function (c) { D.ion = { cat: { br: true, ch: c.ca, co: c.na }, an: { br: true, ch: -c.cb, co: c.nb } }; },
+    answer: function (c) { this.apply(c); return this.why(c) + svgString(c, "final"); },
+    why: function (c) {
+      return (c.na > 1 ? c.na + " × " : "") + ionName(c, "cat") + " = " + (c.na * c.ca) + "+ balances " + (c.nb > 1 ? c.nb + " × " : "") + ionName(c, "an") + " = " + (c.nb * c.cb) + "−, matching the formula <b>" + fx(c.formula) + "</b>.";
+    },
+    note: function (c) { return "<b>Ions:</b> " + (c.na > 1 ? c.na : "") + "[" + ionName(c, "cat") + "] " + (c.nb > 1 ? c.nb : "") + "[" + ionName(c, "an") + "]"; },
+    hint: function (c) { return "Charge = electrons lost (+) or gained (−). Total + charge must equal total − charge: try " + fx(c.formula) + "."; }
+  }
+};
+var IONIC_STEPS = ["type", "config", "change", "shells", "fill", "charges"];
+var COV_STEPS = ["type", "config", "change", "shells", "build", "fill"];
+var ALL_STEPS = ["type", "config", "change", "shells", "build", "fill", "charges"];
+function findSlot(c, el, p) {
+  var atoms = atomsOf(c), r = rOut(D.shells[el]);
+  if (!atoms.length) return Math.hypot(p.x, p.y) < Math.max(80, r) ? "C" : null;
+  var cen = atoms[0], rc = rOut(cen.n), best = null, bd = Math.max(70, r * .9);
+  ORDER.forEach(function (d) {
+    if (cen.bonded.indexOf(d) >= 0) return;
+    var v = DIRS[d], dd = rc + r - OV, dist = Math.hypot(p.x - v[0] * dd, p.y - v[1] * dd);
+    if (dist < bd) { bd = dist; best = d; }
+  });
+  return best;
+}
+
+/* =================== START =================== */
+var G = null;
+function show(id) { ["scr-start", "scr-play", "scr-result"].forEach(function (s) { $(s).hidden = s !== id; }); window.scrollTo(0, 0); }
+function unlocked() { return !!store("dotcross-unlocked"); }
+function paintStart() {
+  $("best-guided").textContent = "Best: " + (store("dotcross-best-guided") || 0);
+  $("best-challenge").textContent = unlocked() ? "Best: " + (store("dotcross-best-challenge") || 0) : "🔒 Unlocks after the worked examples";
+  $("btn-challenge").disabled = !unlocked();
+}
+(function () {
+  $("img-duo-i").src = IMG.ionicBlank; $("img-duo-c").src = IMG.covalentBlank;
+  var sel = $("in-cls");
+  CLASSES.forEach(function (c) { var o = document.createElement("option"); o.textContent = c; sel.appendChild(o); });
+  var s = store("student") || {};
+  if (s.name) $("in-name").value = s.name;
+  if (s.cls && CLASSES.indexOf(s.cls) > -1) sel.value = s.cls;
+  if (s.reg) $("in-reg").value = s.reg;
+  $("chal-desc").textContent = (CHALLENGE_IONIC + CHALLENGE_COVALENT) + " substances, ionic and covalent in turn. No hints!";
+  paintStart();
+})();
+var lastMode = "guided";
+Array.prototype.forEach.call(document.querySelectorAll("#form-start [data-mode]"), function (b) { b.addEventListener("click", function () { lastMode = b.dataset.mode; }); });
+$("form-start").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var mode = (e.submitter && e.submitter.dataset.mode) || lastMode;
+  if (mode === "challenge" && !unlocked()) return;
+  var name = $("in-name").value.trim(), cls = $("in-cls").value, reg = $("in-reg").value.trim();
+  var err = !name ? "Please type your name." : !cls ? "Please choose your class." : !/^\d{1,2}$/.test(reg) ? "Please type your register number (numbers only)." : "";
+  $("form-err").textContent = err; if (err) return;
+  store("student", { name: name, cls: cls, reg: reg });
+  Sound.tone(1, "sine", .01, .0001);
+  startGame(mode, { name: name, cls: cls, reg: reg });
+});
+
+function startGame(mode, student) {
+  G = { mode: mode, student: student, points: 0, log: [], hints: 0, startedAt: Date.now(), busy: false, done: false };
+  G.round = mode === "guided" ? EXAMPLES() : challengeRound(); G.ci = -1;
+  $("btn-hint").hidden = mode !== "guided";
+  $("dots").innerHTML = G.round.map(function () { return "<i></i>"; }).join("");
+  show("scr-play");
+  nextSubstance();
+}
+function curStep() { return G.steps[G.si]; }
+function nextSubstance() {
+  G.ci++;
+  if (G.ci >= G.round.length) { finish(); return; }
+  var c = G.c = G.round[G.ci];
+  D = newDrawing(c);
+  G.rec = { c: c, steps: {}, errs: [], given: [] };
+  G.steps = c.type === "ionic" ? IONIC_STEPS : COV_STEPS; G.si = 0; G.notes = [];
+  $("cmp-name").textContent = cap(c.name);
+  $("cmp-els").innerHTML = fx(c.formula);
+  var dots = $("dots").children; for (var i = 0; i < dots.length; i++) if (i === G.ci) dots[i].className = "now";
+  runStep();
+}
+function paintHud() {
+  $("txt-points").textContent = G.points;
+  $("txt-count").textContent = (G.mode === "guided" ? "Example " : "Substance ") + (G.ci + 1) + "/" + G.round.length;
+  $("steps").innerHTML = G.steps.map(function (id, i) {
+    var r = G.rec.steps[id], cls = r === 2 ? "ok" : r === 1 ? "half" : r === 0 ? "no" : i === G.si ? "now" : "";
+    return '<span class="' + cls + '">' + (i + 1) + ". " + STEP[id].short + "</span>";
+  }).join("");
+  $("notes").innerHTML = G.notes.map(function (n) { return "<span>" + n + "</span>"; }).join("");
+}
+
+/* =================== STEP FLOW =================== */
+function runStep() {
+  var st = STEP[curStep()], c = G.c;
+  G.tries = 0; G.busy = false; G.slip = false; G.slipKeys = []; $("hint-box").hidden = true; $("toast").hidden = true;
+  $("flash").hidden = true; $("stage").hidden = false;
+  $("stage").innerHTML = '<p class="ask">Step ' + (G.si + 1) + ": " + st.title(c) + "</p>" +
+    (G.mode === "guided" && st.howto ? '<p class="howto">' + st.howto(c) + "</p>" : "") + st.body(c) +
+    '<p class="msg-err" id="step-err" hidden></p><button class="btn big" id="btn-check" type="button">Check</button>';
+  st.wire(c);
+  $("btn-check").addEventListener("click", submitStep);
+  paintHud();
+  if (window.innerWidth < 900 && G.si > 0) $("stage").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+window.addEventListener("resize", function () { if (G && !$("scr-play").hidden && !G.busy) paintSvg(); });
+function submitStep() {
+  if (G.busy) return;
+  var id = curStep(), st = STEP[id], c = G.c, v = st.read(c);
+  if (v === null) { var e = $("step-err"); e.textContent = id === "shells" ? "Give every particle at least one shell first." : id === "build" ? "Drag at least one atom onto the drawing first." : id === "fill" ? "Add some electrons first." : "Finish this step before checking."; e.hidden = false; return; }
+  var err = st.check(c, v);
+  G.tries++;
+  if (!err) {
+    var first = G.tries === 1 && !G.slip, pts = first ? 20 : 10; G.points += pts;
+    G.rec.steps[id] = first ? 2 : 1;
+    Sound.ok(); G.notes.push(st.note(c)); paintHud(); G.busy = true;
+    if (G.mode === "guided") {
+      $("hint-box").hidden = true;
+      $("stage").innerHTML = '<div class="why"><h3>✓ Correct! +' + pts + "</h3><p>" + st.why(c) + "</p>" + (st.draws ? svgString(c, id === "shells" ? "shells" : id === "charges" ? "final" : "fill") : "") +
+        '<button class="btn teal" id="btn-cont" type="button">' + (G.si === G.steps.length - 1 ? "Next →" : "Continue →") + "</button></div>";
+      $("btn-cont").addEventListener("click", advance); $("btn-cont").focus({ preventScroll: true });
+    } else { flash("✓ Correct! +" + pts); setTimeout(advance, 700); }
+    return;
+  }
+  G.rec.errs.push(err); G.rec.given.push(st.label + ": " + (st.give ? st.give(v, c) : v));
+  Sound.no();
+  if (G.tries < TRIES) {
+    var e2 = $("step-err"); e2.innerHTML = "Not quite. " + esc(ERR[err].tip) + " Try once more."; e2.hidden = false;
+    if (G.mode === "guided") { var hb = $("hint-box"); hb.innerHTML = "💡 " + st.hint(c); hb.hidden = false; }
+    return;
+  }
+  G.rec.steps[id] = 0; G.notes.push(st.note(c)); paintHud();
+  G.busy = true; $("hint-box").hidden = true;
+  $("stage").innerHTML = '<div class="reveal"><h3>Here\'s the answer</h3><div class="ans">' + st.answer(c) + "</div><p>" + esc(ERR[err].tip) + '</p><button class="btn teal" id="btn-cont" type="button">Continue →</button></div>';
+  $("btn-cont").addEventListener("click", advance); $("btn-cont").focus({ preventScroll: true });
+}
+function advance() {
+  G.busy = false;
+  if (G.si < G.steps.length - 1) { G.si++; runStep(); return; }
+  var perfect = G.steps.every(function (id) { return G.rec.steps[id] === 2; }), bonus = perfect ? 50 : 0;
+  G.points += bonus; G.rec.ok = perfect; G.log.push(G.rec);
+  $("dots").children[G.ci].className = perfect ? "ok" : "no";
+  paintHud();
+  if (perfect) { Sound.ok(); flash("🎉 " + fx(G.c.formula) + " · perfect diagram! +" + bonus, true); setTimeout(nextSubstance, 1300); }
+  else nextSubstance();
+}
+function flash(html, big) { $("stage").hidden = true; var f = $("flash"); f.className = "flash" + (big ? " big" : ""); f.innerHTML = html; f.hidden = false; }
+$("btn-hint").addEventListener("click", function () {
+  if (!G || G.mode !== "guided" || G.busy) return;
+  var hb = $("hint-box"); if (!hb.hidden) { hb.hidden = true; return; }
+  hb.innerHTML = "💡 " + STEP[curStep()].hint(G.c); hb.hidden = false; G.hints++;
+});
+document.addEventListener("keydown", function (e) {
+  if (!G || $("scr-play").hidden || G.done) return;
+  var b = $("btn-cont"); if (b && e.key === "Enter") { e.preventDefault(); b.click(); }
+});
+
+/* =================== RESULTS =================== */
+function finish() {
+  if (G.done) return; G.done = true;
+  var log = G.log, secs = (Date.now() - G.startedAt) / 1000, errCount = {};
+  log.forEach(function (x) { x.errs.forEach(function (e) { errCount[e] = (errCount[e] || 0) + 1; }); });
+  var errs = Object.keys(errCount).sort(function (a, b) { return errCount[b] - errCount[a]; });
+  var bestKey = "dotcross-best-" + G.mode; if (G.points > (store(bestKey) || 0)) store(bestKey, G.points);
+  if (G.mode === "guided") store("dotcross-unlocked", true);
+  var first = G.student.name.split(" ")[0], byStep = {}, stepFirst = 0, totalSteps = 0, byType = {};
+  log.forEach(function (x) {
+    var t = byType[x.c.type] = byType[x.c.type] || [0, 0]; t[1]++; if (x.ok) t[0]++;
+    Object.keys(x.steps).forEach(function (id) { var b = byStep[id] = byStep[id] || [0, 0]; b[1]++; totalSteps++; if (x.steps[id] === 2) { b[0]++; stepFirst++; } });
+  });
+  var perfect = log.filter(function (x) { return x.ok; }).length, pct = totalSteps ? Math.round(100 * stepFirst / totalSteps) : 0;
+  $("res-v1").textContent = stepFirst + "/" + totalSteps; $("res-v2").textContent = perfect + "/" + log.length;
+  $("res-title").textContent = pct >= 80 ? "Bonding boss, " + first + "!" : pct >= 50 ? "Good work, " + first + "!" : "Keep practising, " + first + "!";
+  $("res-msg").textContent = G.mode === "guided" ? "You worked through all " + log.length + " examples. The Challenge is now unlocked!" : "You drew " + log.length + " dot-and-cross diagrams on your own.";
+  var rows = ALL_STEPS.filter(function (id) { return byStep[id]; }).map(function (id) { return [STEP[id].label, byStep[id]]; });
+  ["ionic", "covalent"].forEach(function (t) { if (byType[t]) rows.push([cap(t) + " (perfect)", byType[t]]); });
+  $("res-ring").style.setProperty("--p", pct); $("res-pct").textContent = pct + "%";
+  $("res-time").textContent = mmss(secs); $("res-points").textContent = G.points;
+  $("res-bars").innerHTML = rows.map(function (r) { var p = r[1][1] ? Math.round(100 * r[1][0] / r[1][1]) : 0; return '<div class="bar-row"><span>' + r[0] + '</span><div class="bar"><i class="' + (p < 60 ? "low" : "") + '" style="width:' + p + '%"></i></div><span class="n">' + r[1][0] + "/" + r[1][1] + "</span></div>"; }).join("");
+  $("res-weak").innerHTML = errs.length ? errs.slice(0, 4).map(function (e) { return "<li><b>" + esc(ERR[e].label) + (errCount[e] > 1 ? " ×" + errCount[e] : "") + "</b><span>" + esc(ERR[e].tip) + "</span></li>"; }).join("")
+    : '<li class="good"><b>Nothing to fix this time!</b><span>Try to beat your points score.</span></li>';
+  var wrong = log.filter(function (x) { return x.errs.length; });
+  $("res-review").innerHTML = wrong.length ? wrong.map(function (x) {
+    return "<li><b>" + esc(cap(x.c.name)) + '</b> <span class="key">' + fx(x.c.formula) + "</span><br>" + x.given.map(function (g) { return '<span class="you">✗ ' + esc(g) + "</span>"; }).join("<br>") + "</li>";
+  }).join("") : "<li>No mistakes. Well done!</li>";
+  $("btn-again").textContent = G.mode === "guided" ? "Redo examples ↻" : "New challenge ↻";
+  show("scr-result"); Sound.end(); if (pct >= 80) Confetti.go();
+
+  var summary = "Perfect diagrams: " + perfect + "/" + log.length + " | Steps first try: " + ALL_STEPS.filter(function (id) { return byStep[id]; }).map(function (id) { return STEP[id].label.toLowerCase() + " " + byStep[id][0] + "/" + byStep[id][1]; }).join(", ") +
+    " | Ionic " + (byType.ionic ? byType.ionic[0] + "/" + byType.ionic[1] : "0/0") + " perfect, covalent " + (byType.covalent ? byType.covalent[0] + "/" + byType.covalent[1] : "0/0") +
+    " | Errors: " + (errs.length ? errs.map(function (e) { return ERR[e].label + " x" + errCount[e]; }).join("; ") : "none") + (G.mode === "guided" ? " | Hints: " + G.hints : "");
+  var wrongTxt = wrong.map(function (x) { return x.c.formula + ": " + x.given.join("; "); }).join(" | ");
+  send({ course: SHEET_TAB, chapter: G.mode === "guided" ? "Worked examples" : "Challenge", name: G.student.name, cls: G.student.cls, reg: G.student.reg,
+    score: stepFirst, total: totalSteps, wrong: wrongTxt || "None", time: Math.round(secs), points: G.points, summary: summary });
+}
+function send(payload) {
+  G.payload = payload;
+  var box = $("send"), msg = $("send-msg"), btn = $("btn-resend");
+  box.className = "send span"; btn.hidden = true; msg.textContent = "Sending your results to Ms Khoo…";
+  if (!SUBMIT_URL) { msg.textContent = "Results not sent (no Google Sheet link set up)."; return; }
+  fetch(SUBMIT_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) })
+    .then(function () { msg.textContent = "✓ Sent! Ms Khoo has your results."; })
+    .catch(function () { box.className = "send span err"; msg.textContent = "Couldn't send. Check your internet, then tap Try again."; btn.hidden = false; });
+}
+$("btn-resend").addEventListener("click", function () { send(G.payload); });
+$("btn-again").addEventListener("click", function () { Confetti.stop(); startGame(G.mode, G.student); });
+$("btn-home").addEventListener("click", function () { Confetti.stop(); paintStart(); show("scr-start"); });
+
+/* =================== CONFETTI =================== */
+var Confetti = {
+  c: $("confetti"), on: false,
+  go: function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var c = this.c, w = c.width = innerWidth, h = c.height = innerHeight, cols = ["#FF8243", "#FFC0CB", "#FCE883", "#069494"], p = [];
+    c.hidden = false; this.on = true;
+    for (var i = 0; i < 110; i++) p.push({ x: Math.random() * w, y: -Math.random() * h, s: 6 + Math.random() * 8, v: 2 + Math.random() * 3, a: Math.random() * 6, col: cols[i % 4] });
+    var self = this, ctx = c.getContext("2d");
+    (function loop() {
+      if (!self.on) return; ctx.clearRect(0, 0, w, h); var alive = false;
+      p.forEach(function (q) { q.y += q.v; q.a += .08; q.x += Math.sin(q.a) * 1.2; if (q.y < h + 20) alive = true;
+        ctx.save(); ctx.translate(q.x, q.y); ctx.rotate(q.a); ctx.fillStyle = q.col; ctx.strokeStyle = "#1F2A2E"; ctx.lineWidth = 1.5;
+        ctx.fillRect(-q.s / 2, -q.s / 4, q.s, q.s / 2); ctx.strokeRect(-q.s / 2, -q.s / 4, q.s, q.s / 2); ctx.restore(); });
+      if (alive) requestAnimationFrame(loop); else self.stop();
+    })();
+  },
+  stop: function () { this.on = false; this.c.hidden = true; }
+};
+
+window.__dc = { STEP: STEP, EL: EL, COV: COV, IONIC_POOL: IONIC_POOL, mkIonic: mkIonic, mkCov: mkCov, newDrawing: newDrawing, zonesOf: zonesOf, fillCheck: fillCheck, correctE: correctE, correctMol: correctMol,
+  setD: function (d) { D = d; }, getD: function () { return D; }, state: function () { return G; }, challengeRound: challengeRound };
+})();
+</script>
+</body>
+</html>
